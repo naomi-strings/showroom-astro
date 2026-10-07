@@ -1,0 +1,122 @@
+:root {
+  --spacer: 1rem;
+
+  --clr-bg: #fff;
+  --clr-text: #272425;
+  --clr-text-muted: #d9d9d9;
+  --clr-brand: #796964;
+  --clr-accent: #d21f35;
+
+  --fw-700: 700;
+  --fw-400: 400;
+
+  --fs-400: 1.125rem;
+  --fs-500: 1.5rem;
+  --fs-600: 2.25rem;
+  --fs-700: 3rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  --clr-bg: #272425;
+  --clr-text: #fff;
+  --clr-text-muted: #999999;
+  --clr-accent: #e0414f;
+}
+/*==========================
+resets
+===========================*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* get rid of annoying default margins */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+body {
+  line-height: 1.6;
+  /* change this to suit the design */
+}
+/* get rid of large line heights on headings */
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1;
+}
+
+/* keep images to browser width, scaling proportionally, avoid weirdness that can happen when you don't set display to block or inline-block */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* for horizontal lists */
+ul[class] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*=============================
+Variables
+===============================*/
+
+/* utility classes */
+
+/* utility class to bring back margins where needed */
+
+.flow-content > * + * {
+  margin-top: 1rem;
+}
+
+/* ---lobotomized owl selector article 
+https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/
+*/
+
+/* or you can set a variable, e.g. margin-top: var(--flow-spacer, 1em);
+*/
+
+.text-center {
+  text-align: center;
+}
+
+/*===========================
+general styling
+==============================*/
+
+/* headings */
+
+h1,
+h2,
+h3 {
+  line-height: 1.1;
+}
+
+/*==========================
+sample elements
+===========================*/
+
+.box-shadow {
+  box-shadow: h-offset v-offset blur-radius spread-radius color inset;
+}
