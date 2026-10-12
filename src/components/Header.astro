@@ -1,0 +1,21 @@
+---
+const isHome = Astro.url.pathname === "/";
+const path = Astro.url.pathname;
+const current = (href) => (path.startsWith(href) ? "page" : undefined);
+---
+<header>
+  <div class="wrapper">
+  <a href="/" class="logo" aria-label="Showroom home">
+    <img src="/logo-s.svg" alt="" class="logo-s" width="45" height="45" />
+    {!isHome && <img src="/logo-showroom-white.svg" alt="" class="logo-full" width="100" height="58" />}
+  </a>
+
+  <nav aria-label="Main">
+    <ul class="nav-links">
+  <li><a href="/brands" data-text="brands" aria-current={current("/brands")}>brands</a></li>
+  <li><a href="/press" data-text="press" aria-current={current("/press")}>press</a></li>
+  <li><a href="/contact" data-text="contact" aria-current={current("/contact")}>contact</a></li>
+</ul>
+  </nav>
+</div>
+</header>

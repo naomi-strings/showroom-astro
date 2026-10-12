@@ -1,37 +1,87 @@
-:root {
-  --spacer: 1rem;
+/*=============================
+Fonts
+===============================*/
 
+@font-face {
+  font-family: "Block Gothic";
+  src: url("/fonts/blockgothicboldcondensed.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Block Gothic";
+  src: url("/fonts/blockgothiclightcondensed.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Block Gothic";
+  src: url("/fonts/blockgothicextralightcondensed.woff2") format("woff2");
+  font-weight: 200;
+  font-display: swap;
+}
+
+/*=============================
+Variables
+===============================*/
+
+/*
+Tablet: @media (min-width: 48em) (768px)
+Desktop: @media (min-width: 64em) (1024px)
+*/
+
+:root {
+  color-scheme: light dark;
+
+  /* colors */
   --clr-bg: #fff;
   --clr-text: #272425;
   --clr-text-muted: #d9d9d9;
   --clr-brand: #796964;
+  --clr-text-on-brand: #fff;
   --clr-accent: #d21f35;
 
+  /* type */
+  --ff-base:
+    "Block Gothic", "Bahnschrift Condensed", "Avenir Next Condensed", sans-serif;
+
   --fw-700: 700;
-  --fw-400: 400;
+  --fw-300: 300;
+  --fw-200: 200;
 
   --fs-400: 1.125rem;
   --fs-500: 1.5rem;
   --fs-600: 2.25rem;
   --fs-700: 3rem;
+
+  /* spacing */
+  --spacer: 1.6em;
+
+  /* letter spacing */
+  --ls-100: 0.1em;
 }
 
 @media (prefers-color-scheme: dark) {
-  --clr-bg: #272425;
-  --clr-text: #fff;
-  --clr-text-muted: #999999;
-  --clr-accent: #e0414f;
+  :root {
+    --clr-bg: #272425;
+    --clr-text: #fff;
+    --clr-text-muted: #999999;
+    --clr-accent: #e0414f;
+  }
 }
-/*==========================
-resets
-===========================*/
+
+/*=============================
+Reset
+===============================*/
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* get rid of annoying default margins */
 body,
 h1,
 h2,
@@ -44,27 +94,12 @@ figure {
   margin: 0;
 }
 
-body {
-  line-height: 1.6;
-  /* change this to suit the design */
-}
-/* get rid of large line heights on headings */
-h1,
-h2,
-h3,
-h4 {
-  line-height: 1;
-}
-
-/* keep images to browser width, scaling proportionally, avoid weirdness that can happen when you don't set display to block or inline-block */
-
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* for horizontal lists */
 ul[class] {
   margin: 0;
   padding: 0;
@@ -78,45 +113,293 @@ select {
   font: inherit;
 }
 
+address {
+  font-style: normal;
+}
+
 /*=============================
-Variables
+Base
 ===============================*/
 
-/* utility classes */
-
-/* utility class to bring back margins where needed */
-
-.flow-content > * + * {
-  margin-top: 1rem;
+body {
+  font-family: var(--ff-base);
+  font-weight: var(--fw-300);
+  line-height: 1.6;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
 }
 
-/* ---lobotomized owl selector article 
-https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/
-*/
-
-/* or you can set a variable, e.g. margin-top: var(--flow-spacer, 1em);
-*/
-
-.text-center {
-  text-align: center;
+p {
+  font-size: var(--fs-400);
 }
-
-/*===========================
-general styling
-==============================*/
-
-/* headings */
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
+  font-weight: var(--fw-300);
   line-height: 1.1;
 }
 
-/*==========================
-sample elements
-===========================*/
-
-.box-shadow {
-  box-shadow: h-offset v-offset blur-radius spread-radius color inset;
+h1 {
+  font-size: var(--fs-700);
 }
+
+h2 {
+  font-size: var(--fs-600);
+}
+
+/*=============================
+Utilities
+===============================*/
+
+/* lobotomized owl: https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/ */
+.flow-content > * + * {
+  margin-top: var(--flow-spacer, var(--spacer));
+}
+
+/* wrapper to confine content to a reasonable width */
+
+.wrapper {
+  max-width: 90rem; /* 1440px */
+  margin-inline: auto;
+  padding-inline: var(--spacer);
+}
+
+/* logos with different artwork per color scheme */
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+
+  .logo-dark {
+    display: block;
+  }
+}
+
+/*=============================
+Header
+===============================*/
+
+header {
+  min-height: 86px;
+  background-color: var(--clr-brand);
+  color: var(--clr-text-on-brand);
+}
+
+header > .wrapper {
+  padding-block: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  /* empty for now */
+}
+
+.logo-full {
+  display: none;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacer);
+  font-size: var(--fs-500);
+  letter-spacing: var(--ls-100);
+}
+
+.nav-links a {
+  color: inherit;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* invisible bold copy reserves the width */
+.nav-links a::before {
+  content: attr(data-text);
+  font-weight: var(--fw-700);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  font-weight: var(--fw-700);
+}
+
+.nav-links a[aria-current]::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--clr-accent);
+}
+
+/*=============================
+Footer
+===============================*/
+
+footer {
+  /* empty for now */
+}
+
+footer > wrapper {
+}
+
+.footer-logo {
+  /* empty for now */
+}
+
+.footer-address {
+  /* empty for now */
+}
+
+.footer-links {
+  /* empty for now */
+}
+
+.footer-links a {
+  /* empty for now */
+}
+
+/* the › caret */
+.footer-links a::before {
+  content: "\203A" / "";
+  padding-right: 0.3em;
+}
+
+.footer-social {
+  display: inline-block;
+  padding: 10px;
+}
+
+/*=============================
+Home page: hero
+===============================*/
+
+.hero {
+  /* empty for now */
+}
+
+.hero-bg {
+  /* empty for now */
+}
+
+.hero-logo {
+  /* empty for now */
+}
+
+.hero h1 {
+  /* empty for now */
+}
+
+/*=============================
+Home page: intro
+===============================*/
+
+.intro {
+  /* empty for now */
+}
+
+/* links take the paragraph's color */
+.intro p a {
+  /* empty for now */
+}
+
+.contact-info {
+  /* empty for now */
+}
+
+.contact-info a {
+  /* empty for now */
+}
+
+/*=============================
+Home page: featured brands
+===============================*/
+
+.featured {
+  /* empty for now */
+}
+
+.featured h2 {
+  /* empty for now */
+}
+
+.featured-list {
+  /* empty for now */
+}
+
+.feature-card {
+  /* empty for now */
+}
+
+/* positioning context for the logo over the photo */
+.feature-media {
+  /* empty for now */
+}
+
+.feature-bg {
+  /* empty for now */
+}
+
+.feature-logo {
+  /* empty for now */
+}
+
+.feature-caption {
+  /* empty for now */
+}
+
+.feature-name {
+  /* empty for now */
+}
+
+/* the red separator */
+.feature-name::after {
+  /* empty for now */
+}
+
+.more-link {
+  /* empty for now */
+}
+
+/* the › caret */
+.more-link::after {
+  content: "\203A";
+  padding-left: 0.3em; /* empty for now */
+}
+
+/* Tablet Styles */
+/* This targets screens 768px wide and up */
+
+@media (min-width: 48em) {
+  .logo-full {
+    display: block;
+  }
+
+  .logo:has(.logo-full) .logo-s {
+    display: none;
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 64em) {
+  /* This targets screens 1024px wide and up */
+}
+
+/* reference: box-shadow: h-offset v-offset blur-radius spread-radius color inset; */
