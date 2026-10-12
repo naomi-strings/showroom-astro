@@ -53,13 +53,15 @@ Desktop: @media (min-width: 64em) (1024px)
 
   --fs-400: 1.125rem;
   --fs-500: 1.5rem;
-  --fs-600: 2.25rem;
-  --fs-700: 3rem;
+  --fs-600: 1.875rem;
+  --fs-700: 2.25rem;
+  --fs-800: 3rem;
 
   /* spacing */
   --spacer: 1.6em;
 
   /* letter spacing */
+  --ls-50: 0.05em;
   --ls-100: 0.1em;
 }
 
@@ -249,62 +251,57 @@ header .logo {
   background-color: var(--clr-accent);
 }
 
-/*=============================
-Footer
-===============================*/
-
-footer {
-  /* empty for now */
-}
-
-footer > wrapper {
-}
-
-.footer-logo {
-  /* empty for now */
-}
-
-.footer-address {
-  /* empty for now */
-}
-
-.footer-links {
-  /* empty for now */
-}
-
-.footer-links a {
-  /* empty for now */
-}
-
-/* the › caret */
-.footer-links a::before {
-  content: "\203A" / "";
-  padding-right: 0.3em;
-}
-
-.footer-social {
-  display: inline-block;
-  padding: 10px;
-}
-
-/*=============================
-Home page: hero
-===============================*/
-
+/*====================
+hero
+======================*/
 .hero {
-  /* empty for now */
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: calc(100svh - 86px); /* screen minus header */
 }
 
 .hero-bg {
-  /* empty for now */
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero > .wrapper {
+  display: contents;
 }
 
 .hero-logo {
-  /* empty for now */
+  grid-area: 1 / 1;
+  align-self: center;
+  position: relative; /* sits above the photo */
+  padding-inline: var(--spacer);
+  color: var(--clr-text-on-brand);
+}
+
+.hero-logo svg {
+  display: block;
+  width: 90%;
+  height: auto;
+  margin-inline: auto;
 }
 
 .hero h1 {
-  /* empty for now */
+  padding: var(--spacer);
+  font-size: var(--fs-600);
+  letter-spacing: var(--ls-50);
+  text-wrap: balance;
+}
+
+.hero h1::first-letter {
+  color: var(--clr-accent);
+}
+
+/* additional hero styles for desktop and tablet are in those media sections */
+
+/* tightens this font's roomy apostrophe */
+.apos {
+  margin-inline: -0.08em;
 }
 
 /*=============================
@@ -384,6 +381,45 @@ Home page: featured brands
   padding-left: 0.3em; /* empty for now */
 }
 
+/*=============================
+Footer
+===============================*/
+
+footer {
+  /* empty for now */
+}
+
+footer > .wrapper {
+  /* empty for now */
+}
+
+.footer-logo {
+  /* empty for now */
+}
+
+.footer-address {
+  /* empty for now */
+}
+
+.footer-links {
+  /* empty for now */
+}
+
+.footer-links a {
+  /* empty for now */
+}
+
+/* the › caret */
+.footer-links a::before {
+  content: "\203A" / "";
+  padding-right: 0.3em;
+}
+
+.footer-social {
+  display: inline-block;
+  padding: 10px;
+}
+
 /* Tablet Styles */
 /* This targets screens 768px wide and up */
 
@@ -395,11 +431,61 @@ Home page: featured brands
   .logo:has(.logo-full) .logo-s {
     display: none;
   }
+
+  .hero {
+    display: block;
+    position: relative;
+    height: 33vh;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero > .wrapper {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacer);
+  }
+
+  .hero-logo {
+    padding-inline: 0;
+    flex-shrink: 0;
+  }
+
+  .hero-logo svg {
+    width: 275px;
+  }
+
+  .hero h1 {
+    padding: 0;
+    color: var(--clr-text-on-brand);
+    letter-spacing: var(--ls-100);
+    width: min-content; /* box hugs the longer line, so it sits flush right */
+  }
+
+  /* each half stays on one line */
+  .hero h1 > span {
+    white-space: nowrap;
+  }
+
+  .hero h1::first-letter {
+    color: inherit;
+  }
 }
 
 /* Desktop Styles */
 @media (min-width: 64em) {
   /* This targets screens 1024px wide and up */
+
+  .hero h1 {
+    width: auto;
+  }
 }
 
 /* reference: box-shadow: h-offset v-offset blur-radius spread-radius color inset; */
