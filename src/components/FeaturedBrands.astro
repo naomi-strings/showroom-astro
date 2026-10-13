@@ -1,0 +1,81 @@
+---
+const { heading } = Astro.props;
+---
+
+<section class="featured border-top" id="featured">
+  <div class="wrapper">
+    <h2>{heading}</h2>
+    <ul class="featured-list">
+      <li class="feature-card">
+        <div class="feature-media">
+          <Image
+            src={flexformImage}
+            alt="flexform loungescape sofa"
+            class="feature-bg"
+          />
+          <FlexformLogo
+            class="feature-logo"
+            style="--logo-w:40%"
+            role="img"
+            aria-label="flexform"
+          />
+        </div>
+        <p class="feature-caption">
+          <span class="feature-name">flexform</span> modern design furnishings made
+          in italy since 1959 and offered exclusively in boston by showroom. <a
+            href="/brands/flexform/"
+            class="more-link"
+            >more<span class="visually-hidden"> about flexform</span></a
+          >
+        </p>
+      </li>
+      <li class="feature-card">
+        <div class="feature-media">
+          <Image
+            src={poliformImage}
+            alt="poliform ernest lounge"
+            class="feature-bg"
+          />
+          <PoliformLogo
+            class="feature-logo"
+            style="--logo-w:30%"
+            role="img"
+            aria-label="poliform"
+          />
+        </div>
+
+        <p class="feature-caption">
+          <span class="feature-name">poliform</span> high end contemporary furniture
+          and systems, offered exclusively in boston by showroom. <a
+            href="/brands/poliform/"
+            class="more-link"
+            >more<span class="visually-hidden"> about poliform</span></a
+          >
+        </p>
+      </li>
+      <li class="feature-card">
+        <div class="feature-media">
+          <Image
+            src={poltronafrauImage}
+            alt="poltrona frau lielow bed"
+            class="feature-bg"
+          />
+          <PoltronaFrauLogo
+            class="feature-logo"
+            style="--logo-w: 35%"
+            role="img"
+            aria-label="poltrona frau"
+          />
+        </div>
+        <p class="feature-caption">
+          <span class="feature-name">poltrona frau</span> iconic italian furniture
+          brand founded in 1912, offered exclusively in boston by showroom. <a
+            href="/brands/poltrona-frau/"
+            class="more-link"
+            >more<span class="visually-hidden"> about poltrona frau</span></a
+          >
+        </p>
+      </li>
+    </ul>
+  </div>
+</section>

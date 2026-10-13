@@ -38,7 +38,7 @@ Desktop: @media (min-width: 64em) (1024px)
   /* colors */
   --clr-bg: #fff;
   --clr-text: #272425;
-  --clr-text-muted: #d9d9d9;
+  --clr-text-muted: #989290;
   --clr-brand: #796964;
   --clr-text-on-brand: #fff;
   --clr-accent: #d21f35;
@@ -58,6 +58,7 @@ Desktop: @media (min-width: 64em) (1024px)
   --fs-600: 1.875rem;
   --fs-700: 2.25rem;
   --fs-800: 3rem;
+  --fs-900: 12rem;
 
   /* spacing */
   --spacer: 1.6rem;
@@ -78,7 +79,7 @@ Desktop: @media (min-width: 64em) (1024px)
   :root {
     --clr-bg: #272425;
     --clr-text: #fff;
-    --clr-text-muted: #999999;
+    --clr-text-muted: #948e8c;
     --clr-accent: #e0414f;
     --clr-footer: var(--clr-text);
   }
@@ -354,7 +355,8 @@ Home page: intro
 }
 
 /* links take the paragraph's color */
-.intro p a {
+.intro p a,
+.brand-intro p a {
   color: inherit;
   font-weight: var(--fw-700);
   text-decoration: none;
@@ -504,6 +506,37 @@ footer a {
   margin: -10px; /* keeps the big tap area without shifting the icon */
 }
 
+/*======================
+BRANDS PAGE
+=========================*/
+
+/* ======================
+Brands page intro */
+
+.brand-intro h1 {
+  font-size: var(--fs-900);
+  text-transform: lowercase;
+  font-weight: var(--fw-200);
+  color: var(--clr-text-muted);
+}
+
+.other-brands .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.other-brands-list {
+  font-size: var(--fs-400);
+}
+
+.other-brands-list li::after {
+  content: "\203A";
+  padding-left: 0.2em;
+  text-decoration: none;
+  color: var(--clr-accent);
+}
+
 /* Tablet Styles */
 /* This targets screens 768px wide and up */
 
@@ -593,6 +626,21 @@ footer a {
 
   .footer-logo {
     margin-inline-end: auto;
+  }
+
+  /* brands page */
+
+  .brand-intro .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: last baseline;
+    gap: var(--spacer);
+  }
+
+  .other-brands .wrapper {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--spacer);
   }
 }
 

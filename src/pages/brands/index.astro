@@ -1,0 +1,125 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import flexformImage from "../../assets/images/feature-flexform.png";
+import poliformImage from "../../assets/images/feature-poliform.png";
+import poltronafrauImage from "../../assets/images/feature-poltronafrau.png";
+
+import FlexformLogo from "../../assets/logos/logo-flexform.svg";
+import PoliformLogo from "../../assets/logos/logo-poliform.svg";
+import PoltronaFrauLogo from "../../assets/logos/logo-poltrona-frau.svg";
+---
+
+<BaseLayout
+  title="showroom | featured furniture brands, boston"
+  description="showroom proudly represents flexform, poliform, poltrona frau, and other leading modern furniture brands"
+>
+  <section class="brand-intro" id="brand-intro">
+    <div class="wrapper">
+      <h1>Brands</h1>
+      <p>
+        showroom features an edited offering from some of the world<span
+          class="apos">'</span
+        >s most respected european lines: <a href="/brands/flexform">flexform</a
+        >, <a href="/brands/poliform/">poliform</a>, <a
+          href="/brands/poltrona-frau/">poltrona frau</a
+        >, and others. reach us by phone at <a href="tel:+16174824805"
+          >(617) 482-4805</a
+        > or email&nbsp;
+        <a href="mailto:info@showroomboston.com">info@showroomboston.com</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="featured border-top" id="featured">
+    <div class="wrapper">
+      <h2>featured</h2>
+      <ul class="featured-list">
+        <li class="feature-card">
+          <div class="feature-media">
+            <Image
+              src={flexformImage}
+              alt="flexform loungescape sofa"
+              class="feature-bg"
+            />
+            <FlexformLogo
+              class="feature-logo"
+              style="--logo-w:40%"
+              role="img"
+              aria-label="flexform"
+            />
+          </div>
+          <p class="feature-caption">
+            <span class="feature-name">flexform</span> modern design furnishings made
+            in italy since 1959 and offered exclusively in boston by showroom. <a
+              href="/brands/flexform/"
+              class="more-link"
+              >more<span class="visually-hidden"> about flexform</span></a
+            >
+          </p>
+        </li>
+        <li class="feature-card">
+          <div class="feature-media">
+            <Image
+              src={poliformImage}
+              alt="poliform ernest lounge"
+              class="feature-bg"
+            />
+            <PoliformLogo
+              class="feature-logo"
+              style="--logo-w:30%"
+              role="img"
+              aria-label="poliform"
+            />
+          </div>
+
+          <p class="feature-caption">
+            <span class="feature-name">poliform</span> high end contemporary furniture
+            and systems, offered exclusively in boston by showroom. <a
+              href="/brands/poliform/"
+              class="more-link"
+              >more<span class="visually-hidden"> about poliform</span></a
+            >
+          </p>
+        </li>
+        <li class="feature-card">
+          <div class="feature-media">
+            <Image
+              src={poltronafrauImage}
+              alt="poltrona frau lielow bed"
+              class="feature-bg"
+            />
+            <PoltronaFrauLogo
+              class="feature-logo"
+              style="--logo-w: 35%"
+              role="img"
+              aria-label="poltrona frau"
+            />
+          </div>
+          <p class="feature-caption">
+            <span class="feature-name">poltrona frau</span> iconic italian furniture
+            brand founded in 1912, offered exclusively in boston by showroom. <a
+              href="/brands/poltrona-frau/"
+              class="more-link"
+              >more<span class="visually-hidden"> about poltrona frau</span></a
+            >
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="other-brands border-top">
+    <div class="wrapper">
+      <h2>also proudly representing</h2>
+      <ul class="other-brands-list">
+        <li>casamilano</li>
+        <li>depadova</li>
+        <li>gervasoni</li>
+        <li>glas italia</li>
+        <li>hering berlin</li>
+        <li>promemoria</li>
+        <li>woodnotes</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
