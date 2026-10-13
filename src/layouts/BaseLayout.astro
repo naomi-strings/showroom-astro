@@ -2,6 +2,8 @@
 import "../styles/showroom-styles.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+const { title = "showroom", description = "" } = Astro.props;
 ---
 
 <html lang="en">
@@ -12,7 +14,8 @@ import Footer from "../components/Footer.astro";
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
   </head>
   <body
     ><Header />
@@ -20,5 +23,10 @@ import Footer from "../components/Footer.astro";
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      document.fonts.load('300 1em "Block Gothic"').then((fonts) => {
+        if (fonts.length) document.documentElement.classList.add("fonts-loaded");
+      });
+    </script>
   </body>
 </html>
