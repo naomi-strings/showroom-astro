@@ -1,13 +1,16 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import FeaturedBrands from "../../components/FeaturedBrands.astro";
+import { getOtherBrands } from "../../lib/brands";
+
+const otherBrands = await getOtherBrands();
 ---
 
 <BaseLayout
   title="showroom | featured furniture brands, boston"
   description="showroom proudly represents flexform, poliform, poltrona frau, and other leading modern furniture brands"
 >
-  <section class="brand-intro" id="brand-intro">
+  <section class="page-intro">
     <div class="wrapper">
       <h1>Brands</h1>
       <p>
@@ -24,18 +27,18 @@ import FeaturedBrands from "../../components/FeaturedBrands.astro";
     </div>
   </section>
 
-  <FeaturedBrands heading="featured" />
+  <FeaturedBrands />
   <section class="other-brands border-top">
     <div class="wrapper">
       <h2>also proudly representing</h2>
       <ul class="other-brands-list">
-        <li>casamilano</li>
-        <li>depadova</li>
-        <li>gervasoni</li>
-        <li>glas italia</li>
-        <li>hering berlin</li>
-        <li>promemoria</li>
-        <li>woodnotes</li>
+        {
+          otherBrands.map((brand) => (
+            <li>
+              <a href={`/brands/${brand.id}/`}>{brand.data.name}</a>
+            </li>
+          ))
+        }
       </ul>
     </div>
   </section>

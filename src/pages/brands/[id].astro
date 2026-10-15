@@ -1,0 +1,165 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { brandImage, brandLogo, instagramUrl } from "../../lib/brands";
+
+export async function getStaticPaths() {
+  const brands = await getCollection("brands");
+  return brands.map((brand) => ({
+    params: { id: brand.id },
+    props: { brand },
+  }));
+}
+
+const { brand } = Astro.props;
+const {
+  name,
+  blurb,
+  heroImage,
+  heroImageAlt,
+  heroPosition,
+  logoStyle,
+  website,
+  gallery,
+} = brand.data;
+const { Content } = await render(brand);
+const Logo = brandLogo(brand.id, logoStyle);
+const instagram = instagramUrl(brand);
+const websiteLabel = website
+  ? new URL(website).hostname.replace(/^www\./, "")
+  : "";
+---
+
+<BaseLayout title={`${name} | showroom boston`} description={blurb}>
+  <section class="brand-hero">
+    {
+      heroImage && (
+        <Image
+          src={brandImage(brand.id, heroImage)}
+          alt={heroImageAlt ?? ""}
+          class="brand-hero-bg"
+          style={`--hero-pos: ${heroPosition}`}
+          loading="eager"
+          fetchpriority="high"
+        />
+      )
+    }
+    <div class="wrapper">
+      <Logo
+        class={`brand-hero-logo logo-${logoStyle}`}
+        role="img"
+        aria-label={name}
+      />
+      <p class="brand-hero-tag">at showroom</p>
+    </div>
+  </section>
+
+  <section class="brand-detail">
+    <div class="wrapper">
+      <div class="brand-text">
+        <h1>{name}</h1>
+        <p class="brand-blurb">{blurb}</p>
+        <div class="brand-body">
+          <Content />
+        </div>
+        <ul class="brand-links">
+          <li>
+            <a href={instagram}>{name}@showroom on instagram</a>
+          </li>
+          {
+            website && (
+              <li>
+                <a href={website}>{websiteLabel}</a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+
+      {
+        gallery.length > 0 && (
+          <div class="brand-gallery" data-carousel>
+            {gallery.length > 1 && (
+              <button type="button" class="carousel-arrow carousel-prev" aria-label="previous photo" data-dir="-1">
+                &#8249;
+              </button>
+            )}
+            <ul class="carousel" aria-label={`${name} photos`}>
+              {gallery.map((photo, i) => (
+                <li class="carousel-slide" id={`slide-${i + 1}`}>
+                  <Image
+                    src={brandImage(brand.id, photo.src)}
+                    alt={photo.alt}
+                    loading={i === 0 ? "eager" : "lazy"}
+                  />
+                </li>
+              ))}
+            </ul>
+            {gallery.length > 1 && (
+              <button type="button" class="carousel-arrow carousel-next" aria-label="next photo" data-dir="1">
+                &#8250;
+              </button>
+            )}
+            {gallery.length > 1 && (
+              <div class="carousel-dots" role="tablist" aria-label="choose a photo">
+                {gallery.map((_, i) => (
+                  <button
+                    type="button"
+                    class="carousel-dot"
+                    role="tab"
+                    aria-selected={i === 0 ? "true" : "false"}
+                    aria-label={`photo ${i + 1} of ${gallery.length}`}
+                    data-index={i}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  /* carousel: dots scroll to a slide; scrolling updates the active dot */
+  document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((root) => {
+    const track = root.querySelector<HTMLElement>(".carousel");
+    const slides = Array.from(root.querySelectorAll<HTMLElement>(".carousel-slide"));
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>(".carousel-dot"));
+    if (!track || dots.length === 0) return;
+
+    const setActive = (index: number) => {
+      dots.forEach((dot, i) => dot.setAttribute("aria-selected", String(i === index)));
+    };
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        slides[i].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+      });
+    });
+
+    let current = 0;
+    root.querySelectorAll<HTMLButtonElement>(".carousel-arrow").forEach((arrow) => {
+      arrow.addEventListener("click", () => {
+        const dir = Number(arrow.dataset.dir);
+        const next = (current + dir + slides.length) % slides.length;
+        slides[next].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+      });
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            current = slides.indexOf(entry.target as HTMLElement);
+            setActive(current);
+          }
+        });
+      },
+      { root: track, threshold: 0.6 }
+    );
+    slides.forEach((slide) => observer.observe(slide));
+  });
+</script>

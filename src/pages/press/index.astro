@@ -1,0 +1,85 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { pressImage } from "../../lib/brands";
+
+/* newest first: folder names are <year>-<nn>, so a reverse sort works */
+const clips = (await getCollection("press")).sort((a, b) =>
+  b.id.localeCompare(a.id)
+);
+
+/* label the first clip of each year so the year can sit above that tile */
+const firstOfYear = new Set<string>();
+const seen = new Set<number>();
+for (const c of clips) {
+  if (!seen.has(c.data.year)) {
+    seen.add(c.data.year);
+    firstOfYear.add(c.id);
+  }
+}
+
+/* render each clip's markdown body */
+const bodies = new Map(
+  await Promise.all(clips.map(async (c) => [c.id, (await render(c)).Content] as const))
+);
+---
+
+<BaseLayout
+  title="showroom | press clips, boston"
+  description="media coverage of showroom boston and the furniture brands it represents"
+>
+  <section class="page-intro">
+    <div class="wrapper">
+      <h1>press</h1>
+      <p>
+        for media inquiries reach us by phone at <a href="tel:+16174824805"
+          >(617) 482-4805</a
+        > or email&nbsp;
+        <a href="mailto:info@showroomboston.com">info@showroomboston.com</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="press border-top">
+    <div class="wrapper">
+      <ul class="press-grid">
+        {
+          clips.map((clip) => {
+            const { caption, headline, alt, image, cover, item, itemPosition, itemWidth, year } = clip.data;
+            const [itemX, itemY] = itemPosition.split(/\s+/);
+            const Body = bodies.get(clip.id)!;
+            return (
+              <li class="press-tile" tabindex="0" id={firstOfYear.has(clip.id) ? `y${year}` : undefined}>
+                {firstOfYear.has(clip.id) && <h2 class="press-year">{year}</h2>}
+                <div class="press-art">
+                  {image && (
+                    <Image src={pressImage(clip.id, image)} alt={alt} class="press-image" width="800" />
+                  )}
+                  {cover && (
+                    <Image src={pressImage(clip.id, cover)} alt={item ? "" : alt} class="press-cover" width="800" />
+                  )}
+                  {item && (
+                    <Image src={pressImage(clip.id, item)} alt={alt} class="press-item" width="800" style={`--item-x: ${itemX}; --item-y: ${itemY ?? "50%"}; --item-w: ${itemWidth}`} />
+                  )}
+                  <div class="press-text">
+                    <p class="press-caption">
+                      {caption.split(" | ").map((part, i) => (
+                        <>
+                          {i > 0 && " | "}
+                          <span class="nowrap">{part}</span>
+                        </>
+                      ))}
+                    </p>
+                    {headline && <p class="press-headline">{headline}</p>}
+                    <Body />
+                  </div>
+                </div>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
