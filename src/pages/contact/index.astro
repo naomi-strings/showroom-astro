@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHero from "../../components/SiteHero.astro";
+---
+
+<BaseLayout
+  title="showroom | contact us, boston"
+  description="visit showroom at 240 stuart street in boston's park square, or reach us by phone or email."
+>
+  <SiteHero compact>contact us</SiteHero>
+
+  <section class="contact-detail">
+    <div class="wrapper">
+      <address class="contact-info">
+        <p>
+          showroom is located in Boston<span class="apos">'</span>s Park Square,
+          steps from Back Bay and the Theater District.
+        </p>
+        <p>Stop by or contact us by phone or email.</p>
+        <ul class="contact-links">
+          <li class="caret-before">
+            240 stuart street <span class="hide-on-mobile">| </span><span class="nowrap">boston ma 02116</span>
+          </li>
+          <li class="caret-before"><a href="tel:+16174824805">(617) 482-4805</a></li>
+          <li class="caret-before">
+            <a href="mailto:info@showroomboston.com">info@showroomboston.com</a>
+          </li>
+        </ul>
+      </address>
+
+      <section class="subscribe" id="subscribe">
+        <p class="subscribe-kicker">for exclusive deals + promotions</p>
+        <h2>join our email list</h2>
+        <!-- Begin Constant Contact Inline Form Code -->
+        <div
+          class="ctct-inline-form"
+          data-form-id="fc328146-58b0-4f1b-aed5-986d51ab3072"
+        >
+        </div>
+        <!-- End Constant Contact Inline Form Code -->
+      </section>
+
+      <div class="contact-map">
+        <iframe
+          src="https://www.google.com/maps?q=240+Stuart+St,+Boston,+MA+02116&output=embed"
+          title="map to showroom, 240 stuart street, boston"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  /* Constant Contact renders its form after load; copy each label into its field as a placeholder */
+  const form = document.querySelector(".ctct-inline-form");
+  if (form) {
+    const fill = () => {
+      form
+        .querySelectorAll<HTMLInputElement>(".ctct-form-element")
+        .forEach((input) => {
+          const label = form.querySelector<HTMLElement>(
+            `label[for="${input.id}"]`,
+          );
+          if (label && !input.placeholder)
+            input.placeholder = label.textContent?.trim() ?? "";
+        });
+    };
+    new MutationObserver(fill).observe(form, {
+      childList: true,
+      subtree: true,
+    });
+    fill();
+  }
+</script>
+
+<!-- Constant Contact's loader; only this page needs it -->
+<script is:inline>
+  var _ctct_m = "22117276342830187ededce152edd5e9";
+</script>
+<script
+  is:inline
+  id="signupScript"
+  src="https://static.ctctcdn.com/js/signup-form-widget/current/signup-form-widget.min.js"
+  async
+  defer></script>

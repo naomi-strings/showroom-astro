@@ -35,7 +35,9 @@ const otherBrands = await getOtherBrands();
         {
           otherBrands.map((brand) => (
             <li>
-              <a href={`/brands/${brand.id}/`}>{brand.data.name}</a>
+              <a href={`/brands/${brand.id}/`} class="caret-after">
+                {brand.data.name}
+              </a>
             </li>
           ))
         }

@@ -8,6 +8,13 @@ const { title = "showroom", description = "" } = Astro.props;
 
 <html lang="en">
   <head>
+    <script is:inline>
+      /* apply a saved theme choice before the page paints, to avoid a flash */
+      try {
+        const t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -23,6 +30,19 @@ const { title = "showroom", description = "" } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      /* theme toggle: flips between light and dark and remembers the choice */
+      document.querySelectorAll(".theme-toggle").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const root = document.documentElement;
+          const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+          const isDark = root.dataset.theme ? root.dataset.theme === "dark" : systemDark;
+          const next = isDark ? "light" : "dark";
+          root.dataset.theme = next;
+          try { localStorage.setItem("theme", next); } catch (e) {}
+        });
+      });
+    </script>
     <script is:inline>
       document.fonts.load('300 1em "Block Gothic"').then((fonts) => {
         if (fonts.length) document.documentElement.classList.add("fonts-loaded");
