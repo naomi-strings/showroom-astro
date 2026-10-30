@@ -39,14 +39,14 @@ Desktop: @media (min-width: 64em) (1024px)
   color-scheme: light dark;
 
   /* colors */
-  --clr-bg: #fff;
-  --clr-text: #272425;
-  --clr-text-muted: #989290;
+  --clr-bg: #fcfbf9;
+  --clr-text: #4a4844;
+  --clr-text-muted: #8c8984;
   --clr-brand: #796964;
   --clr-text-on-brand: #fff;
   --clr-accent: #d21f35;
   --clr-footer: var(--clr-brand);
-  --clr-bg-soft: #f4f3f2; /* very light warm gray for page backgrounds */
+  --clr-bg-soft: #f7f6f3; /* very light warm gray for page backgrounds */
 
   /* type */
   --ff-base: "Figtree", system-ui, "Segoe UI", Roboto, sans-serif;
@@ -55,11 +55,12 @@ Desktop: @media (min-width: 64em) (1024px)
 
   /* Figtree is wider than the condensed face, so every weight steps down one */
   --fw-700: 600;
-  --fw-300: 400;
+  --fw-300: 300;
   --fw-200: 300;
 
   --fs-300: 1rem;
-  --fs-400: 1.35rem;
+  --fs-400: 1rem;
+  --fs-450: 1.2rem;
   --fs-500: 1.5rem;
   --fs-600: 1.875rem;
   --fs-700: 2.25rem;
@@ -86,29 +87,30 @@ Desktop: @media (min-width: 64em) (1024px)
   --lh-200: 1.25;
   --lh-300: 1.5;
   --lh-400: 1.6;
+  --lh-500: 1.8; /* intro paragraphs */
 }
 
 /* dark mode follows the system setting unless the toggle has set data-theme on <html>.
    The dark values live once, applied by two selectors. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --clr-bg: #272425;
-    --clr-text: #fff;
-    --clr-text-muted: #948e8c;
+    --clr-bg: #161614;
+    --clr-text: #c9c6bf;
+    --clr-text-muted: #7f7c76;
     --clr-accent: #e0414f;
     --clr-footer: var(--clr-text);
-    --clr-bg-soft: #2e2b2c;
+    --clr-bg-soft: #1e1d1b;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --clr-bg: #272425;
-  --clr-text: #fff;
-  --clr-text-muted: #948e8c;
+  --clr-bg: #161614;
+  --clr-text: #c9c6bf;
+  --clr-text-muted: #7f7c76;
   --clr-accent: #e0414f;
   --clr-footer: var(--clr-text);
-  --clr-bg-soft: #2e2b2c;
+  --clr-bg-soft: #1e1d1b;
   color-scheme: dark;
 }
 
@@ -309,7 +311,7 @@ header > .wrapper {
   display: flex;
   flex-direction: row;
   gap: 1.6em; /* gap scales with type */
-  font-size: var(--fs-500);
+  font-size: var(--fs-450);
   letter-spacing: var(--ls-100);
 }
 
@@ -430,11 +432,13 @@ hero
   text-wrap: balance;
   padding: var(--spacer) var(--spacer) 0;
 }
-
+/*
 .hero h1::first-letter,
 h2::first-letter {
   color: var(--clr-accent);
 }
+  TODO: Client did not like the first-letter treatment; delete this style
+  */
 
 /* additional hero styles for desktop and tablet are in those media sections */
 
@@ -445,8 +449,9 @@ Home page: intro
   padding-block-start: var(--section-space);
 }
 
-.intro p {
-  line-height: var(--lh-300);
+.intro p,
+.page-intro p {
+  line-height: var(--lh-500);
 }
 
 /* links take the paragraph's color */
@@ -459,8 +464,10 @@ Home page: intro
 
 .contact-info {
   padding: var(--tile-pad);
-  font-size: var(--fs-500);
-  line-height: var(--lh-200); /* tighter lines; list items get their own spacing */
+  font-size: var(--fs-450);
+  line-height: var(
+    --lh-300
+  ); /* tighter lines; list items get their own spacing */
   background-color: var(--clr-brand);
   color: var(--clr-text-on-brand);
 }
@@ -868,6 +875,7 @@ Brands page intro */
   font-size: var(--fs-900);
   text-transform: lowercase;
   font-weight: var(--fw-200);
+  letter-spacing: -0.02em;
   color: var(--clr-text-muted);
 }
 
