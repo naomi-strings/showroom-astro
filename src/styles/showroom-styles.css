@@ -39,14 +39,17 @@ Desktop: @media (min-width: 64em) (1024px)
   color-scheme: light dark;
 
   /* colors */
-  --clr-bg: #fcfbf9;
+  --clr-bg: #f7f6f3;
   --clr-text: #4a4844;
   --clr-text-muted: #8c8984;
   --clr-brand: #796964;
   --clr-text-on-brand: #fff;
   --clr-accent: #d21f35;
   --clr-footer: var(--clr-brand);
-  --clr-bg-soft: #f7f6f3; /* very light warm gray for page backgrounds */
+  --clr-header: var(--clr-text); /* header bg; flips with the theme */
+  --clr-text-on-header: var(--clr-bg);
+  --clr-text-on-header-hover: #fff;
+  --clr-bg-soft: #f0eee9; /* very light warm gray for page backgrounds */
 
   /* type */
   --ff-base: "Figtree", system-ui, "Segoe UI", Roboto, sans-serif;
@@ -100,6 +103,7 @@ Desktop: @media (min-width: 64em) (1024px)
     --clr-accent: #e0414f;
     --clr-footer: var(--clr-text);
     --clr-bg-soft: #1e1d1b;
+    --clr-text-on-header-hover: #000;
     color-scheme: dark;
   }
 }
@@ -111,6 +115,7 @@ Desktop: @media (min-width: 64em) (1024px)
   --clr-accent: #e0414f;
   --clr-footer: var(--clr-text);
   --clr-bg-soft: #1e1d1b;
+  --clr-text-on-header-hover: #000;
   color-scheme: dark;
 }
 
@@ -227,11 +232,10 @@ Utilities
   margin-inline-end: -0.1em;
 }
 
-/* use at the top of a section as a divider */
+/* section spacer (the accent border it once drew is gone) */
 .border-top {
   margin-block-start: var(--section-space);
   padding-block-start: calc(var(--section-space) / 2);
-  border-block-start: 1px solid var(--clr-accent);
 }
 
 /* hidden visually, still read by screen readers and crawlers */
@@ -292,8 +296,9 @@ Header
 
 header {
   min-height: var(--header-h);
-  background-color: var(--clr-brand);
-  color: var(--clr-text-on-brand);
+  background-color: var(--clr-header);
+  color: var(--clr-text-on-header);
+  overflow: hidden; /* the current-page marker can't spill past the edge */
 }
 
 header > .wrapper {
@@ -305,6 +310,18 @@ header > .wrapper {
 
 .logo-full {
   display: none;
+}
+
+/* the inline SVGs take currentColor, so the link must not be link-colored */
+.logo {
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+/* home page: keep the logo's space, hide the artwork */
+.logo-hidden {
+  visibility: hidden;
 }
 
 .nav-links {
@@ -324,18 +341,9 @@ header > .wrapper {
   position: relative;
 }
 
-/* invisible bold copy reserves the width */
-.nav-links a::before {
-  content: attr(data-text);
-  font-weight: var(--fw-700);
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-}
-
 .nav-links a:hover,
 .nav-links a:focus-visible {
-  font-weight: var(--fw-700);
+  color: var(--clr-text-on-header-hover);
 }
 
 /* the nav and toggle sit together at the right */
@@ -379,15 +387,30 @@ header nav {
   }
 }
 
-.nav-links a[aria-current]::after {
+/* current page: a 1px stem from the label down to a square flush with the header's bottom edge.
+   --marker-reach is the distance from the label's bottom to the header's bottom (header padding). */
+.nav-links a[aria-current] {
+  --marker-reach: 1.5em;
+}
+
+.nav-links a[aria-current]::before {
   content: "";
   position: absolute;
   top: 100%;
+  bottom: calc(-1 * var(--marker-reach));
+  left: 50%;
+  width: 1px;
+  background-color: var(--clr-accent);
+}
+
+.nav-links a[aria-current]::after {
+  content: "";
+  position: absolute;
+  bottom: calc(-1 * var(--marker-reach));
   left: 50%;
   translate: -50% 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  width: 10px;
+  height: 10px;
   background-color: var(--clr-accent);
 }
 
@@ -468,8 +491,9 @@ Home page: intro
   line-height: var(
     --lh-300
   ); /* tighter lines; list items get their own spacing */
-  background-color: var(--clr-brand);
+  background-color: var(--clr-header);
   color: var(--clr-text-on-brand);
+  border-bottom: 4px solid var(--clr-accent);
 }
 
 .contact-info a {
@@ -711,9 +735,12 @@ main:has(.contact-detail) + footer {
   padding: 0.4em 1em; /* same as resting, so nothing shifts */
 }
 
+/*
 .subscribe h2::first-letter {
   color: var(--clr-accent);
 }
+  TODO: client did not like this style, delete if not going to use
+  */
 
 .contact-map iframe {
   display: block;
@@ -920,9 +947,13 @@ Brand Single Pages
   text-align: right;
 }
 
+/*
 .brand-hero-tag::first-letter {
   color: var(--clr-accent);
 }
+
+TODO - delete, client did not like.
+  */
 
 /* photo and logo share the second row */
 .brand-hero-bg,
@@ -956,10 +987,12 @@ Brand Single Pages
   font-size: var(--fs-600);
   letter-spacing: var(--ls-50);
 }
-
+/*
 .brand-text h1::first-letter {
   color: var(--clr-accent);
 }
+  TODO: delete, client did not like
+  */
 
 .brand-detail {
   padding-block-start: var(--section-space);
