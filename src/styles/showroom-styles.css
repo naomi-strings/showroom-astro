@@ -3,23 +3,26 @@ Fonts
 ===============================*/
 
 @font-face {
+  font-family: "Figtree";
+  src: url("/fonts/figtree-variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/fonts/figtree-italic-variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* kept for a text logotype; SVG logos don't need it */
+@font-face {
   font-family: "Block Gothic";
   src: url("/fonts/blockgothicboldcondensed.woff2") format("woff2");
   font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Block Gothic";
-  src: url("/fonts/blockgothiclightcondensed.woff2") format("woff2");
-  font-weight: 300;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Block Gothic";
-  src: url("/fonts/blockgothicextralightcondensed.woff2") format("woff2");
-  font-weight: 200;
   font-display: swap;
 }
 
@@ -46,12 +49,14 @@ Desktop: @media (min-width: 64em) (1024px)
   --clr-bg-soft: #f4f3f2; /* very light warm gray for page backgrounds */
 
   /* type */
-  --ff-base:
+  --ff-base: "Figtree", system-ui, "Segoe UI", Roboto, sans-serif;
+  --ff-logo:
     "Block Gothic", "Bahnschrift Condensed", "Avenir Next Condensed", sans-serif;
 
-  --fw-700: 700;
-  --fw-300: 300;
-  --fw-200: 200;
+  /* Figtree is wider than the condensed face, so every weight steps down one */
+  --fw-700: 600;
+  --fw-300: 400;
+  --fw-200: 300;
 
   --fs-300: 1rem;
   --fs-400: 1.35rem;
