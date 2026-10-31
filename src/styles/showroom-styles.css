@@ -46,8 +46,8 @@ Desktop: @media (min-width: 64em) (1024px)
   --clr-text-on-brand: #fff;
   --clr-accent: #d21f35;
   --clr-footer: var(--clr-brand);
-  --clr-header: var(--clr-text); /* header bg; flips with the theme */
-  --clr-text-on-header: var(--clr-bg);
+  --clr-header: #4a4844; /* header + contact box; fixed, does not flip in dark mode */
+  --clr-text-on-header: #f7f6f3;
   --clr-text-on-header-hover: #fff;
   --clr-bg-soft: #f0eee9; /* very light warm gray for page backgrounds */
 
@@ -103,7 +103,6 @@ Desktop: @media (min-width: 64em) (1024px)
     --clr-accent: #e0414f;
     --clr-footer: var(--clr-text);
     --clr-bg-soft: #1e1d1b;
-    --clr-text-on-header-hover: #000;
     color-scheme: dark;
   }
 }
@@ -115,7 +114,6 @@ Desktop: @media (min-width: 64em) (1024px)
   --clr-accent: #e0414f;
   --clr-footer: var(--clr-text);
   --clr-bg-soft: #1e1d1b;
-  --clr-text-on-header-hover: #000;
   color-scheme: dark;
 }
 
@@ -421,6 +419,7 @@ hero
   display: grid;
   grid-template-rows: 1fr auto;
   height: calc(100svh - var(--header-h)); /* screen minus header */
+  overflow: hidden; /* the zoomed photo must not spill */
 }
 
 .hero-bg {
@@ -428,6 +427,10 @@ hero
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* hero-2 is already texture; cover fills it, zoom stays available for tuning */
+  object-position: var(--hero-focus, 50% 50%);
+  scale: var(--hero-zoom, 1);
+  transform-origin: var(--hero-focus, 50% 50%);
 }
 
 .hero > .wrapper {
@@ -477,12 +480,20 @@ Home page: intro
   line-height: var(--lh-500);
 }
 
-/* links take the paragraph's color */
+/* links take the paragraph's color; accent on hover */
 .intro p a,
 .page-intro p a {
   color: inherit;
   font-weight: var(--fw-700);
   text-decoration: none;
+  transition: color 0.15s;
+}
+
+.intro p a:hover,
+.intro p a:focus-visible,
+.page-intro p a:hover,
+.page-intro p a:focus-visible {
+  color: var(--clr-accent);
 }
 
 .contact-info {
@@ -493,13 +504,29 @@ Home page: intro
   ); /* tighter lines; list items get their own spacing */
   background-color: var(--clr-header);
   color: var(--clr-text-on-brand);
-  border-bottom: 4px solid var(--clr-accent);
 }
 
 .contact-info a {
   color: inherit;
   text-decoration: none;
   font-weight: inherit;
+  position: relative; /* anchors the hover caret */
+}
+
+/* hover: the › caret appears in the gutter to the left, so the text doesn't shift */
+.contact-info a::before {
+  content: "\203A" / "";
+  position: absolute;
+  right: 100%;
+  padding-inline-end: 0.3em;
+  color: var(--clr-accent);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.contact-info a:hover::before,
+.contact-info a:focus-visible::before {
+  opacity: 1;
 }
 
 .intro .wrapper {
@@ -822,21 +849,30 @@ Press page
   overflow: auto;
 }
 
+/* :focus-visible (not :focus-within) so a mouse click doesn't pin the overlay on */
 .press-tile:hover .press-text,
 .press-tile:focus-visible .press-text,
-.press-tile:focus-within .press-text {
+.press-tile:has(:focus-visible) .press-text {
   opacity: 0.92;
 }
 
 .press-caption {
   font-size: var(--fs-500);
   letter-spacing: var(--ls-50);
+  line-height: var(--lh-200);
+  text-wrap: balance;
+}
+
+/* captions are too long to hold on one line at this size */
+.press-caption .nowrap {
+  white-space: normal;
 }
 
 .press-headline {
   font-weight: var(--fw-700);
   text-transform: uppercase;
   letter-spacing: var(--ls-50);
+  line-height: var(--lh-300);
 }
 
 .press-text a {

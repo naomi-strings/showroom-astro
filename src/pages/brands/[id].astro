@@ -65,12 +65,16 @@ const websiteLabel = website
         </div>
         <ul class="brand-links">
           <li>
-            <a href={instagram} class="caret-before">{name}@showroom on instagram</a>
+            <a href={instagram} class="caret-before"
+              >{name}@showroom on instagram</a
+            >
           </li>
           {
             website && (
               <li>
-                <a href={website} class="caret-before">{websiteLabel}</a>
+                <a href={website} class="caret-before">
+                  {websiteLabel}
+                </a>
               </li>
             )
           }
@@ -81,7 +85,12 @@ const websiteLabel = website
         gallery.length > 0 && (
           <div class="brand-gallery" data-carousel>
             {gallery.length > 1 && (
-              <button type="button" class="carousel-arrow carousel-prev" aria-label="previous photo" data-dir="-1">
+              <button
+                type="button"
+                class="carousel-arrow carousel-prev"
+                aria-label="previous photo"
+                data-dir="-1"
+              >
                 &#8249;
               </button>
             )}
@@ -97,12 +106,21 @@ const websiteLabel = website
               ))}
             </ul>
             {gallery.length > 1 && (
-              <button type="button" class="carousel-arrow carousel-next" aria-label="next photo" data-dir="1">
+              <button
+                type="button"
+                class="carousel-arrow carousel-next"
+                aria-label="next photo"
+                data-dir="1"
+              >
                 &#8250;
               </button>
             )}
             {gallery.length > 1 && (
-              <div class="carousel-dots" role="tablist" aria-label="choose a photo">
+              <div
+                class="carousel-dots"
+                role="tablist"
+                aria-label="choose a photo"
+              >
                 {gallery.map((_, i) => (
                   <button
                     type="button"
@@ -126,28 +144,44 @@ const websiteLabel = website
   /* carousel: dots scroll to a slide; scrolling updates the active dot */
   document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((root) => {
     const track = root.querySelector<HTMLElement>(".carousel");
-    const slides = Array.from(root.querySelectorAll<HTMLElement>(".carousel-slide"));
-    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>(".carousel-dot"));
+    const slides = Array.from(
+      root.querySelectorAll<HTMLElement>(".carousel-slide"),
+    );
+    const dots = Array.from(
+      root.querySelectorAll<HTMLButtonElement>(".carousel-dot"),
+    );
     if (!track || dots.length === 0) return;
 
     const setActive = (index: number) => {
-      dots.forEach((dot, i) => dot.setAttribute("aria-selected", String(i === index)));
+      dots.forEach((dot, i) =>
+        dot.setAttribute("aria-selected", String(i === index)),
+      );
     };
 
     dots.forEach((dot, i) => {
       dot.addEventListener("click", () => {
-        slides[i].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+        slides[i].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "start",
+        });
       });
     });
 
     let current = 0;
-    root.querySelectorAll<HTMLButtonElement>(".carousel-arrow").forEach((arrow) => {
-      arrow.addEventListener("click", () => {
-        const dir = Number(arrow.dataset.dir);
-        const next = (current + dir + slides.length) % slides.length;
-        slides[next].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    root
+      .querySelectorAll<HTMLButtonElement>(".carousel-arrow")
+      .forEach((arrow) => {
+        arrow.addEventListener("click", () => {
+          const dir = Number(arrow.dataset.dir);
+          const next = (current + dir + slides.length) % slides.length;
+          slides[next].scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start",
+          });
+        });
       });
-    });
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -158,7 +192,7 @@ const websiteLabel = website
           }
         });
       },
-      { root: track, threshold: 0.6 }
+      { root: track, threshold: 0.6 },
     );
     slides.forEach((slide) => observer.observe(slide));
   });
