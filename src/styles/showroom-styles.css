@@ -1045,6 +1045,18 @@ TODO - delete, client did not like.
   gap: var(--space-sm);
 }
 
+/* brand name links to the brand site; looks like a heading, reddens on hover */
+.brand-text h1 a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.brand-text h1 a:hover,
+.brand-text h1 a:focus-visible {
+  color: var(--clr-accent);
+}
+
 .brand-links {
   font-size: var(--fs-400);
   letter-spacing: var(--ls-50);

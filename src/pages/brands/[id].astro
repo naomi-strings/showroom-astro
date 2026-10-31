@@ -51,14 +51,14 @@ const websiteLabel = website
         role="img"
         aria-label={name}
       />
-      <p class="brand-hero-tag">at showroom</p>
+      <p class="brand-hero-tag">@showroom</p>
     </div>
   </section>
 
   <section class="brand-detail">
     <div class="wrapper">
       <div class="brand-text">
-        <h1>{name}</h1>
+        <h1>{website ? <a href={website}>{name}</a> : name}</h1>
         <p class="brand-blurb">{blurb}</p>
         <div class="brand-body">
           <Content />
