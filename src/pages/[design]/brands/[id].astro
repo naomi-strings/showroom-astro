@@ -1,15 +1,18 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { brandImage, brandLogo, instagramUrl } from "../../lib/brands";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { brandImage, brandLogo, instagramUrl } from "../../../lib/brands";
+import { DESIGNS } from "../../../lib/design";
 
 export async function getStaticPaths() {
   const brands = await getCollection("brands");
-  return brands.map((brand) => ({
-    params: { id: brand.id },
-    props: { brand },
-  }));
+  return DESIGNS.flatMap((design) =>
+    brands.map((brand) => ({
+      params: { design, id: brand.id },
+      props: { brand },
+    })),
+  );
 }
 
 const { brand } = Astro.props;
@@ -46,11 +49,15 @@ const websiteLabel = website
       )
     }
     <div class="wrapper">
-      <Logo
-        class={`brand-hero-logo logo-${logoStyle}`}
-        role="img"
-        aria-label={name}
-      />
+      {Logo ? (
+        <Logo
+          class={`brand-hero-logo logo-${logoStyle}`}
+          role="img"
+          aria-label={name}
+        />
+      ) : (
+        <p class="brand-hero-logo brand-hero-name">{name}</p>
+      )}
       <p class="brand-hero-tag">@showroom</p>
     </div>
   </section>

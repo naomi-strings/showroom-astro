@@ -1,6 +1,9 @@
+---
+const { design } = Astro.params;
+---
 <footer class="border-top">
   <div class="wrapper">
-  <a href="/" class="footer-logo" aria-label="Showroom home">
+  <a href={`/${design}/`} class="footer-logo" aria-label="Showroom home">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 94.55 55.2"
@@ -43,7 +46,7 @@
         >map + directions</a
       >
     </li>
-    <li><a class="caret-before" href="/contact/#subscribe">subscribe to email</a></li>
+    <li><a class="caret-before" href={`/${design}/contact/#subscribe`}>subscribe to email</a></li>
     <li>
       <a class="caret-before" href="mailto:info@showroomboston.com">info@showroomboston.com</a>
     </li>

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { getFeaturedBrands, brandImage, brandLogo } from "../lib/brands";
 
 const { heading } = Astro.props;
+const { design } = Astro.params;
 const brands = await getFeaturedBrands();
 ---
 
@@ -16,7 +17,7 @@ const brands = await getFeaturedBrands();
           const Logo = brandLogo(brand.id, "white");
           return (
             <li class="feature-card">
-              <a href={`/brands/${brand.id}/`} class="feature-media" aria-label={name}>
+              <a href={`/${design}/brands/${brand.id}/`} class="feature-media" aria-label={name}>
                 {heroImage && (
                   <Image
                     src={brandImage(brand.id, heroImage)}
@@ -24,15 +25,17 @@ const brands = await getFeaturedBrands();
                     class="feature-bg"
                   />
                 )}
-                <Logo
-                  class="feature-logo"
-                  style={`--logo-w: ${logoWidth}`}
-                  aria-hidden="true"
-                />
+                {Logo && (
+                  <Logo
+                    class="feature-logo"
+                    style={`--logo-w: ${logoWidth}`}
+                    aria-hidden="true"
+                  />
+                )}
               </a>
               <p class="feature-caption">
                 <span class="feature-name">{name}</span> {blurb}{" "}
-                <a href={`/brands/${brand.id}/`} class="more-link caret-after">
+                <a href={`/${design}/brands/${brand.id}/`} class="more-link caret-after">
                   more<span class="visually-hidden"> about {name}</span>
                 </a>
               </p>

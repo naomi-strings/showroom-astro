@@ -1,8 +1,11 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import FeaturedBrands from "../../components/FeaturedBrands.astro";
-import { getOtherBrands } from "../../lib/brands";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import FeaturedBrands from "../../../components/FeaturedBrands.astro";
+import { getOtherBrands } from "../../../lib/brands";
+import { designPaths } from "../../../lib/design";
 
+export const getStaticPaths = designPaths;
+const { design } = Astro.params;
 const otherBrands = await getOtherBrands();
 ---
 
@@ -16,9 +19,9 @@ const otherBrands = await getOtherBrands();
       <p>
         showroom features an edited offering from some of the world<span
           class="apos">'</span
-        >s most respected european lines: <a href="/brands/flexform">flexform</a
-        >, <a href="/brands/poliform/">poliform</a>, <a
-          href="/brands/poltrona-frau/">poltrona frau</a
+        >s most respected european lines: <a href={`/${design}/brands/flexform/`}>flexform</a
+        >, <a href={`/${design}/brands/poliform/`}>poliform</a>, <a
+          href={`/${design}/brands/poltrona-frau/`}>poltrona frau</a
         >, and others. reach us by phone at <a href="tel:+16174824805"
           >(617) 482-4805</a
         > or email&nbsp;
@@ -35,7 +38,7 @@ const otherBrands = await getOtherBrands();
         {
           otherBrands.map((brand) => (
             <li>
-              <a href={`/brands/${brand.id}/`} class="caret-after">
+              <a href={`/${design}/brands/${brand.id}/`} class="caret-after">
                 {brand.data.name}
               </a>
             </li>

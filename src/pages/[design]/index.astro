@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHero from "../../components/SiteHero.astro";
+import FeaturedBrands from "../../components/FeaturedBrands.astro";
+import { designPaths } from "../../lib/design";
+
+export const getStaticPaths = designPaths;
+const { design } = Astro.params;
+---
+
+<BaseLayout
+  title="showroom | contemporary furniture, boston"
+  description="boston's premier resource for contemporary furniture, featuring flexform, poliform, and poltrona frau."
+>
+  <SiteHero>
+    <!-- <span>boston<span class="apos">'</span>s premier resource </span>
+    <span>for contemporary furniture</span>-->
+  </SiteHero>
+
+  <!--TODO: Client asked for no tagline. Delete corresponding element from stylesheet. 
+-->
+
+  <section class="intro" id="intro">
+    <div class="wrapper">
+      <p>
+        showroom is boston<span class="apos">'</span>s premier resource for
+        contemporary furniture featuring an edited offering from some of the
+        world<span class="apos">'</span>s most respected european lines, such as <a
+          href={`/${design}/brands/flexform/`}>flexform</a
+        >, <a href={`/${design}/brands/poliform/`}>poliform</a>, and <a
+          href={`/${design}/brands/poltrona-frau/`}>poltrona frau</a
+        >. featuring impeccable quality, reassuring comfort, and lasting style.
+        showroom specializes in unparalleled service from product selection to
+        installation with a thorough understanding of product lines from
+        construction and materials to fabric and finish. an in store designer is
+        able to develop and coordinate the perfect closet and kitchen solution,
+        and references to some of the city's best designers are also available.
+      </p>
+      <p class="hide-on-wide">
+        reach us by phone at <a href="tel:+16174824805">(617) 482-4805</a> or email
+        <a href="mailto:info@showroomboston.com">info@showroomboston.com</a>.
+      </p>
+      <address class="contact-info hide-on-mobile">
+        <a href="mailto:info@showroomboston.com">info@showroomboston.com</a><br
+        />
+        <a href="tel:+16174824805">(617) 482-4805</a><br />
+        240 stuart street<br />
+        boston ma 02116
+      </address>
+    </div>
+  </section>
+
+  <FeaturedBrands heading="@showroom" />
+</BaseLayout>

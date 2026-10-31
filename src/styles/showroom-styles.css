@@ -591,7 +591,7 @@ Home page: featured brands
 Contact page
 ===============================*/
 
-/* mobile: no photo, just the heading, styled like the page-intro h1 */
+/* .hero-compact was the old contact-page hero; the page now uses .page-intro
 .hero-compact {
   height: auto;
   display: block;
@@ -601,6 +601,7 @@ Contact page
   text-align: right;
   color: var(--clr-text-muted);
 }
+*/
 
 .contact-detail {
   padding-block: var(--section-space);
@@ -1004,6 +1005,16 @@ TODO - delete, client did not like.
   object-position: var(--hero-pos, center); /* set per brand in index.md */
 }
 
+/* brands without a logo file yet show their name in the logo's place */
+.brand-hero-name {
+  margin: 0;
+  font-size: var(--fs-700);
+  font-weight: var(--fw-200);
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: #fff;
+}
+
 .brand-hero-logo {
   position: relative; /* above the photo */
   align-self: start;
@@ -1226,8 +1237,9 @@ TODO - delete, client did not like.
     display: none;
   }
 
+  /* .hero-compact (old contact hero), tablet rules
   .hero-compact {
-    display: block; /* same as .hero at this size */
+    display: block;
   }
 
   .hero-compact h1 {
@@ -1240,6 +1252,7 @@ TODO - delete, client did not like.
     text-align: left;
     color: var(--clr-text-on-brand);
   }
+  */
 
   /* tablet: info and form side by side, map below */
   .contact-detail > .wrapper {
@@ -1400,3 +1413,278 @@ TODO - delete, client did not like.
 }
 
 /* reference: box-shadow: h-offset v-offset blur-radius spread-radius color inset; */
+
+/*=============================
+Design switch (1 | 2) and pre-index
+===============================*/
+
+.design-switch {
+  margin-inline-start: 1.25em;
+  display: inline-flex;
+  gap: 0.35em;
+  font-size: var(--fs-300);
+  letter-spacing: var(--ls-50);
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+
+.design-switch:hover,
+.design-switch:focus-visible {
+  opacity: 1;
+}
+
+.design-switch .on {
+  font-weight: var(--fw-700);
+  color: var(--clr-accent);
+}
+
+.pre-index {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.pre-index-kicker,
+.pre-index-note {
+  color: var(--clr-text-muted);
+  letter-spacing: var(--ls-50);
+}
+
+.pre-index-choices {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacer) 0;
+  display: flex;
+  gap: var(--spacer);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pre-index-choice {
+  display: grid;
+  place-content: center;
+  gap: 0.25em;
+  width: 11rem;
+  aspect-ratio: 1;
+  background-color: var(--clr-header);
+  color: var(--clr-text-on-header);
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.pre-index-choice span {
+  font-size: var(--fs-800);
+  font-weight: var(--fw-200);
+  line-height: 1;
+}
+
+.pre-index-choice small {
+  font-size: var(--fs-300);
+  letter-spacing: var(--ls-100);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.pre-index-choice:hover,
+.pre-index-choice:focus-visible {
+  background-color: var(--clr-accent);
+}
+
+/*=============================
+Design 2
+Everything here hangs off html[data-design="2"] so design 1 is untouched.
+===============================*/
+
+/* inner pages: the hero texture is the header background */
+html[data-design="2"] header {
+  background-image: var(--header-texture);
+  background-size: cover;
+  background-position: center;
+}
+
+/* home: no header band; the nav floats at the right of the hero */
+html[data-design="2"][data-page="home"] header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  background: none;
+  min-height: 0;
+  overflow: visible;
+}
+
+html[data-design="2"][data-page="home"] .hero {
+  position: relative;
+}
+
+/* on the home page the header overlays the hero, so the hero takes the header's height back */
+html[data-design="2"][data-page="home"] .hero {
+  height: 100svh;
+}
+
+/* mobile: full wordmark instead of the S mark */
+html[data-design="2"] .logo-full {
+  display: block;
+}
+
+html[data-design="2"] .logo-s {
+  display: none;
+}
+
+/* hamburger: three lines; open/hover = outer lines fade, middle turns red and stands up */
+.menu-toggle {
+  display: none;
+  position: relative;
+  width: 2.75rem; /* 44px tap target */
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  margin-inline-start: auto;
+}
+
+.menu-toggle span {
+  position: absolute;
+  left: 0.5rem; /* 28px visible line inside the 44px target */
+  right: 0.5rem;
+  height: 2px;
+  background-color: currentColor;
+  transition:
+    opacity 0.25s,
+    rotate 0.3s,
+    background-color 0.25s;
+}
+
+.menu-toggle span:nth-child(1) { top: 0.85rem; }
+.menu-toggle span:nth-child(2) { top: calc(50% - 1px); }
+.menu-toggle span:nth-child(3) { bottom: 0.85rem; }
+
+.menu-toggle:hover span:nth-child(1),
+.menu-toggle:hover span:nth-child(3),
+.menu-toggle[aria-expanded="true"] span:nth-child(1),
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+  opacity: 0;
+}
+
+.menu-toggle:hover span:nth-child(2),
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+  background-color: var(--clr-accent);
+  rotate: 90deg;
+}
+
+@media (max-width: 49.99em) {
+  html[data-design="2"] .menu-toggle {
+    display: block;
+  }
+
+  /* the nav drops down under the header when open */
+  html[data-design="2"] header nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: var(--spacer);
+    background-color: var(--clr-header);
+    background-image: var(--header-texture);
+    background-size: cover;
+    background-position: center bottom;
+    display: none;
+  }
+
+  html[data-design="2"] header.menu-open nav {
+    display: block;
+  }
+
+  html[data-design="2"] header .nav-links {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* each row is a full-width tap target; the current page is marked in the accent */
+  html[data-design="2"] header .nav-links a {
+    padding-block: 0.6em;
+  }
+
+  html[data-design="2"] header .nav-links a[aria-current] {
+    color: var(--clr-accent);
+  }
+
+  /* the open menu must be allowed to hang below the header */
+  html[data-design="2"] header {
+    overflow: visible;
+    position: relative;
+  }
+
+  /* no stem-and-square marker in the dropdown */
+  html[data-design="2"] .nav-links a[aria-current]::before,
+  html[data-design="2"] .nav-links a[aria-current]::after {
+    display: none;
+  }
+
+  /* phone: no 1|2 switch and no theme toggle; the system preference decides */
+  html[data-design="2"] .design-switch,
+  html[data-design="2"] .theme-toggle {
+    display: none;
+  }
+
+  /* phone home: the header *is* the hero. A flex row on the texture:
+     wordmark at left (about 2/3 wide), hamburger at right, generous padding.
+     The separate hero section isn't shown at all. */
+  html[data-design="2"][data-page="home"] .hero {
+    display: none;
+  }
+
+  html[data-design="2"][data-page="home"] header {
+    position: relative;
+    inset: auto;
+    background-color: var(--clr-header);
+    background-image: var(--header-texture);
+    background-size: cover;
+    background-position: center;
+  }
+
+  html[data-design="2"][data-page="home"] header > .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-block: calc(var(--spacer) * 1.5) calc(var(--spacer) * 2.5);
+  }
+
+  html[data-design="2"][data-page="home"] .logo {
+    visibility: visible;
+    width: 66%;
+    margin-block-start: calc(var(--spacer) * 1.5);
+  }
+
+  html[data-design="2"][data-page="home"] .logo-full {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 50em) {
+  /* desktop home: the header is exactly the hero's height, so the nav centers on the hero */
+  html[data-design="2"][data-page="home"] header {
+    inset: 0 0 auto 0;
+    height: 33vh;
+  }
+
+  html[data-design="2"][data-page="home"] header > .wrapper {
+    height: 100%;
+  }
+
+  html[data-design="2"][data-page="home"] .hero {
+    height: 33vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-toggle span {
+    transition: none;
+  }
+}

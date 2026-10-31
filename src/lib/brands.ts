@@ -27,14 +27,11 @@ export function brandImage(slug: string, filename: string): ImageMetadata {
   return img;
 }
 
-/* logo component for a brand: logo-<slug>.svg or logo-<slug>-native.svg */
+/* logo component for a brand: logo-<slug>.svg or logo-<slug>-native.svg.
+   Returns null when the brand has no logo file yet, so pages can fall back to the name. */
 export function brandLogo(slug: string, style: "white" | "native" = "white") {
   const file = style === "native" ? `logo-${slug}-native.svg` : `logo-${slug}.svg`;
-  const logo = logos[`/src/assets/logos/${file}`];
-  if (!logo) {
-    throw new Error(`Brand "${slug}": logo "${file}" not found in src/assets/logos`);
-  }
-  return logo;
+  return logos[`/src/assets/logos/${file}`] ?? null;
 }
 
 /* same lookup for press clips */

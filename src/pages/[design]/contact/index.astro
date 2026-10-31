@@ -1,22 +1,28 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import SiteHero from "../../components/SiteHero.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { designPaths } from "../../../lib/design";
+
+export const getStaticPaths = designPaths;
 ---
 
 <BaseLayout
   title="showroom | contact us, boston"
   description="visit showroom at 240 stuart street in boston's park square, or reach us by phone or email."
 >
-  <SiteHero compact>contact us</SiteHero>
+  <section class="page-intro">
+    <div class="wrapper">
+      <h1>contact</h1>
+      <p>
+        showroom is located in boston<span class="apos">'</span>s park square,
+        steps from back bay and the theater district. stop by, or reach us by
+        phone or email.
+      </p>
+    </div>
+  </section>
 
-  <section class="contact-detail">
+  <section class="contact-detail border-top">
     <div class="wrapper">
       <address class="contact-info">
-        <p>
-          showroom is located in Boston<span class="apos">'</span>s Park Square,
-          steps from Back Bay and the Theater District.
-        </p>
-        <p>Stop by or contact us by phone or email.</p>
         <ul class="contact-links">
           <li class="caret-before">
             240 stuart street <span class="hide-on-mobile">| </span><span class="nowrap">boston ma 02116</span>
