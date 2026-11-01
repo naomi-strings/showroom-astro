@@ -593,6 +593,14 @@ Home page: featured brands
 Contact page
 ===============================*/
 
+/* dev and staging only: stands in for the Constant Contact form */
+.form-placeholder {
+  padding: var(--tile-pad);
+  border: 1px dashed var(--clr-text-muted);
+  color: var(--clr-text-muted);
+  text-align: center;
+}
+
 /* .hero-compact was the old contact-page hero; the page now uses .page-intro
 .hero-compact {
   height: auto;

@@ -3,6 +3,10 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { designPaths } from "../../../lib/design";
 
 export const getStaticPaths = designPaths;
+
+/* Constant Contact's loader pulls in every active form on the account, pop-up included,
+   so it only runs in the real production build; dev and staging get a placeholder */
+const liveForm = import.meta.env.PROD && !import.meta.env.STAGING;
 ---
 
 <BaseLayout
@@ -37,13 +41,14 @@ export const getStaticPaths = designPaths;
       <section class="subscribe" id="subscribe">
         <p class="subscribe-kicker">for exclusive deals + promotions</p>
         <h2>join our email list</h2>
-        <!-- Begin Constant Contact Inline Form Code -->
-        <div
-          class="ctct-inline-form"
-          data-form-id="fc328146-58b0-4f1b-aed5-986d51ab3072"
-        >
-        </div>
-        <!-- End Constant Contact Inline Form Code -->
+        {liveForm ? (
+          <div
+            class="ctct-inline-form"
+            data-form-id="fc328146-58b0-4f1b-aed5-986d51ab3072"
+          />
+        ) : (
+          <p class="form-placeholder">the sign-up form appears here on the live site.</p>
+        )}
       </section>
 
       <div class="contact-map">
@@ -81,13 +86,17 @@ export const getStaticPaths = designPaths;
   }
 </script>
 
-<!-- Constant Contact's loader; only this page needs it -->
-<script is:inline>
-  var _ctct_m = "22117276342830187ededce152edd5e9";
-</script>
-<script
-  is:inline
-  id="signupScript"
-  src="https://static.ctctcdn.com/js/signup-form-widget/current/signup-form-widget.min.js"
-  async
-  defer></script>
+{liveForm && (
+  <>
+    <script is:inline>
+      var _ctct_m = "22117276342830187ededce152edd5e9";
+    </script>
+    <script
+      is:inline
+      id="signupScript"
+      src="https://static.ctctcdn.com/js/signup-form-widget/current/signup-form-widget.min.js"
+      async
+      defer
+    />
+  </>
+)}
