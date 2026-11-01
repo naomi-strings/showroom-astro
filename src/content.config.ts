@@ -13,7 +13,7 @@ const brands = defineCollection({
   schema: z.object({
     name: z.string(),
     featured: z.boolean().default(false),
-    blurb: z.string(), // card caption and meta description
+    blurb: z.string().optional(), // image alt text, meta description, and the line under the brand-page heading
     heroImage: z.string().optional(),
     heroImageAlt: z.string().optional(),
     heroPosition: z.string().default("center"), // object-position for the brand-page hero, e.g. "center 30%"

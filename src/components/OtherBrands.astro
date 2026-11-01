@@ -1,0 +1,78 @@
+---
+/*
+  The non-featured brands as square tiles, four to a row.
+  `scroll` (home page): one row that scrolls sideways, arrows outside the grid.
+  Without it (brands page): a wrapping grid.
+  Phones get two per row and never scroll.
+  A brand with no hero image yet shows its name on a dark tile.
+*/
+import { Image } from "astro:assets";
+import { getOtherBrands, brandImage, brandLogo } from "../lib/brands";
+
+const { heading, scroll = false } = Astro.props;
+const { design } = Astro.params;
+const brands = await getOtherBrands();
+---
+
+<section class="other-brands border-top">
+  <div class="wrapper">
+    {heading && <h2>{heading}</h2>}
+    <div class:list={["brand-strip", { "brand-strip-scroll": scroll }]} data-brand-strip>
+      {scroll && (
+        <button type="button" class="strip-arrow strip-prev" aria-label="previous brands" data-dir="-1">&#8249;</button>
+      )}
+      <ul class="brand-tiles">
+        {
+          brands.map((brand) => {
+            const { name, blurb, heroImage, logoWidth, logoStyle } = brand.data;
+            const Logo = brandLogo(brand.id, logoStyle);
+            const label = (blurb ? `${name}: ${blurb}` : name);
+            return (
+              <li class="brand-tile">
+                <a href={`/${design}/brands/${brand.id}/`} class="feature-media" aria-label={label}>
+                  {heroImage ? (
+                    <Image
+                      src={brandImage(brand.id, heroImage)}
+                      alt={label}
+                      class="feature-bg"
+                      widths={[400, 700]}
+                      sizes="(min-width: 50em) 25vw, 50vw"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span class="brand-tile-blank" aria-hidden="true">
+                      {name}
+                      <small>photo and brand page to come</small>
+                    </span>
+                  )}
+                  {Logo && heroImage && (
+                    <Logo class={`feature-logo logo-${logoStyle}`} style={`--logo-w: ${logoWidth}`} aria-hidden="true" />
+                  )}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      {scroll && (
+        <button type="button" class="strip-arrow strip-next" aria-label="more brands" data-dir="1">&#8250;</button>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  /* arrows scroll the strip by one tile (tile width + gap) */
+  document.querySelectorAll<HTMLElement>("[data-brand-strip]").forEach((strip) => {
+    const track = strip.querySelector<HTMLElement>(".brand-tiles");
+    if (!track) return;
+    strip.querySelectorAll<HTMLButtonElement>(".strip-arrow").forEach((arrow) => {
+      arrow.addEventListener("click", () => {
+        const tile = track.querySelector<HTMLElement>(".brand-tile");
+        if (!tile) return;
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        track.scrollBy({ left: Number(arrow.dataset.dir) * (tile.offsetWidth + gap), behavior: "smooth" });
+      });
+    });
+  });
+</script>

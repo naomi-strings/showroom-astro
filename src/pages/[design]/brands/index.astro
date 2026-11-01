@@ -1,12 +1,11 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import FeaturedBrands from "../../../components/FeaturedBrands.astro";
-import { getOtherBrands } from "../../../lib/brands";
+import OtherBrands from "../../../components/OtherBrands.astro";
 import { designPaths } from "../../../lib/design";
 
 export const getStaticPaths = designPaths;
 const { design } = Astro.params;
-const otherBrands = await getOtherBrands();
 ---
 
 <BaseLayout
@@ -31,20 +30,5 @@ const otherBrands = await getOtherBrands();
   </section>
 
   <FeaturedBrands />
-  <section class="other-brands border-top">
-    <div class="wrapper">
-      <h2>also proudly representing</h2>
-      <ul class="other-brands-list">
-        {
-          otherBrands.map((brand) => (
-            <li>
-              <a href={`/${design}/brands/${brand.id}/`} class="caret-after">
-                {brand.data.name}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+  <OtherBrands heading="also proudly representing" />
 </BaseLayout>

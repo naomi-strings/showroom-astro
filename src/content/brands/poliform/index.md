@@ -1,7 +1,7 @@
 ---
 name: poliform
 featured: true
-blurb: high end contemporary furniture and systems, offered exclusively in boston by showroom.
+blurb: furnishings, night + day systems, and kitchens, offered exclusively in boston by showroom.
 heroImage: hero.png
 heroImageAlt: poliform ernest lounge
 heroPosition: center
@@ -18,4 +18,4 @@ gallery:
     alt: poliform senzafine walk-in closet, second view
 ---
 
-Body text for the poliform page goes here.
+Founded in Brianza in 1970, Poliform grew out of the region<span class="apos">'</span>s artisan tradition into one of the defining names in contemporary Italian furniture. The range covers the whole home with a single, coherent design language: sofas and seating, kitchens, and the wardrobe and walk-in closet systems the company is best known for, all modular enough to fit the room rather than the other way around. Everything is designed and made in Italy, and built to last.

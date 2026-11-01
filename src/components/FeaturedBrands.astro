@@ -13,32 +13,29 @@ const brands = await getFeaturedBrands();
     <ul class="featured-list">
       {
         brands.map((brand) => {
-          const { name, blurb, heroImage, heroImageAlt, logoWidth } = brand.data;
-          const Logo = brandLogo(brand.id, "white");
+          const { name, blurb, heroImage, logoWidth, logoStyle } = brand.data;
+          const Logo = brandLogo(brand.id, logoStyle);
           return (
             <li class="feature-card">
-              <a href={`/${design}/brands/${brand.id}/`} class="feature-media" aria-label={name}>
+              {/* the photo is the link; the former caption becomes the image's alt text */}
+              <a href={`/${design}/brands/${brand.id}/`} class="feature-media" aria-label={(blurb ? `${name}: ${blurb}` : name)}>
                 {heroImage && (
                   <Image
                     src={brandImage(brand.id, heroImage)}
-                    alt={heroImageAlt ?? ""}
+                    alt={(blurb ? `${name}: ${blurb}` : name)}
                     class="feature-bg"
+                    widths={[400, 800, 1000]}
+                    sizes="(min-width: 50em) 33vw, 100vw"
                   />
                 )}
                 {Logo && (
                   <Logo
-                    class="feature-logo"
+                    class={`feature-logo logo-${logoStyle}`}
                     style={`--logo-w: ${logoWidth}`}
                     aria-hidden="true"
                   />
                 )}
               </a>
-              <p class="feature-caption">
-                <span class="feature-name">{name}</span> {blurb}{" "}
-                <a href={`/${design}/brands/${brand.id}/`} class="more-link caret-after">
-                  more<span class="visually-hidden"> about {name}</span>
-                </a>
-              </p>
             </li>
           );
         })

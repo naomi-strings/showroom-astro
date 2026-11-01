@@ -17,6 +17,8 @@ const { compact = false } = Astro.props;
       class:list={["hero-bg", { "hide-on-mobile": compact }]}
       loading="eager"
       fetchpriority="high"
+      widths={[800, 1400, 2000, 3000]}
+      sizes="100vw"
     />
     <div class="wrapper">
       <div class:list={["hero-logo", { "hide-on-mobile": compact }]}>

@@ -45,6 +45,8 @@ const websiteLabel = website
           style={`--hero-pos: ${heroPosition}`}
           loading="eager"
           fetchpriority="high"
+          widths={[800, 1300, 2000]}
+          sizes="100vw"
         />
       )
     }
@@ -66,7 +68,7 @@ const websiteLabel = website
     <div class="wrapper">
       <div class="brand-text">
         <h1>{website ? <a href={website}>{name}</a> : name}</h1>
-        <p class="brand-blurb">{blurb}</p>
+        {blurb && <p class="brand-blurb">{blurb}</p>}
         <div class="brand-body">
           <Content />
         </div>
@@ -108,6 +110,8 @@ const websiteLabel = website
                     src={brandImage(brand.id, photo.src)}
                     alt={photo.alt}
                     loading={i === 0 ? "eager" : "lazy"}
+                    widths={[600, 1200, 2400]}
+                    sizes="(min-width: 64em) 66vw, 100vw"
                   />
                 </li>
               ))}
