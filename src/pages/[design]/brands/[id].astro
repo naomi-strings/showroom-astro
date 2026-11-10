@@ -51,16 +51,18 @@ const websiteLabel = website
       )
     }
     <div class="wrapper">
-      {Logo ? (
-        <Logo
-          class={`brand-hero-logo logo-${logoStyle}`}
-          role="img"
-          aria-label={name}
-        />
-      ) : (
-        <p class="brand-hero-logo brand-hero-name">{name}</p>
-      )}
-      <p class="brand-hero-tag">@showroom</p>
+      {
+        Logo ? (
+          <Logo
+            class={`brand-hero-logo logo-${logoStyle}`}
+            role="img"
+            aria-label={name}
+          />
+        ) : (
+          <p class="brand-hero-logo brand-hero-name">{name}</p>
+        )
+      }
+      <!--<p class="brand-hero-tag">@showroom</p>-->
     </div>
   </section>
 
