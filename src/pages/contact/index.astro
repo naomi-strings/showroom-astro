@@ -1,8 +1,5 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { designPaths } from "../../../lib/design";
-
-export const getStaticPaths = designPaths;
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 /* Constant Contact's loader pulls in every active form on the account, pop-up included,
    so it only runs in the real production build; dev and staging get a placeholder */

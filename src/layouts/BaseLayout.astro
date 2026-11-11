@@ -3,14 +3,11 @@ import "../styles/showroom-styles.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-import { stripDesign } from "../lib/design";
-
 const { title = "showroom", description = "" } = Astro.props;
-const { design = "1" } = Astro.params;
-const isHome = stripDesign(Astro.url.pathname) === "/";
+const isHome = Astro.url.pathname === "/";
 ---
 
-<html lang="en" data-design={design} data-page={isHome ? "home" : undefined}>
+<html lang="en" data-page={isHome ? "home" : undefined}>
   <head>
     <script is:inline>
       /* apply a saved theme choice before the page paints, to avoid a flash */

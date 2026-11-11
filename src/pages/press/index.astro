@@ -1,11 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { pressImage } from "../../../lib/brands";
-import { designPaths } from "../../../lib/design";
-
-export const getStaticPaths = designPaths;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { pressImage } from "../../lib/brands";
 
 /* newest first: folder names are <year>-<nn>, so a reverse sort works */
 const clips = (await getCollection("press")).sort((a, b) =>

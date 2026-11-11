@@ -17,10 +17,11 @@ const brands = defineCollection({
     heroImage: z.string().optional(),
     heroImageAlt: z.string().optional(),
     heroPosition: z.string().default("center"), // object-position for the brand-page hero, e.g. "center 30%"
+    tileImage: z.string().optional(), // square-ish image for the home/brands tiles; falls back to heroImage
+    tilePosition: z.string().default("center"), // object-position for the tile crop
     logoWidth: z.string().default("35%"), // width of the logo on the home-page card
     logoStyle: z.enum(["white", "native"]).default("white"), // which logo file to show on the brand page hero
     website: z.string().url().optional(),
-    instagramTag: z.string().optional(), // defaults to <slug>showroomboston
     gallery: z
       .array(z.object({ src: z.string(), alt: z.string() }))
       .default([]),

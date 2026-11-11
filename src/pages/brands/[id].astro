@@ -1,18 +1,15 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { brandImage, brandLogo, instagramUrl } from "../../../lib/brands";
-import { DESIGNS } from "../../../lib/design";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { brandImage, brandLogo } from "../../lib/brands";
 
 export async function getStaticPaths() {
   const brands = await getCollection("brands");
-  return DESIGNS.flatMap((design) =>
-    brands.map((brand) => ({
-      params: { design, id: brand.id },
-      props: { brand },
-    })),
-  );
+  return brands.map((brand) => ({
+    params: { id: brand.id },
+    props: { brand },
+  }));
 }
 
 const { brand } = Astro.props;
@@ -23,12 +20,12 @@ const {
   heroImageAlt,
   heroPosition,
   logoStyle,
+  logoWidth,
   website,
   gallery,
 } = brand.data;
 const { Content } = await render(brand);
 const Logo = brandLogo(brand.id, logoStyle);
-const instagram = instagramUrl(brand);
 const websiteLabel = website
   ? new URL(website).hostname.replace(/^www\./, "")
   : "";
@@ -55,6 +52,7 @@ const websiteLabel = website
         Logo ? (
           <Logo
             class={`brand-hero-logo logo-${logoStyle}`}
+            style={`--logo-w: ${logoWidth}`}
             role="img"
             aria-label={name}
           />
@@ -75,11 +73,6 @@ const websiteLabel = website
           <Content />
         </div>
         <ul class="brand-links">
-          <li>
-            <a href={instagram} class="caret-before"
-              >{name}@showroom on instagram</a
-            >
-          </li>
           {
             website && (
               <li>

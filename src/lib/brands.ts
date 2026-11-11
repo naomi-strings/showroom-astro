@@ -46,10 +46,6 @@ export function pressImage(slug: string, filename: string): ImageMetadata {
   return img;
 }
 
-export function instagramUrl(brand: Brand): string {
-  const tag = brand.data.instagramTag ?? `${brand.id}showroomboston`;
-  return `https://www.instagram.com/explore/tags/${tag}/`;
-}
 
 const byName = (a: Brand, b: Brand) => a.data.name.localeCompare(b.data.name);
 

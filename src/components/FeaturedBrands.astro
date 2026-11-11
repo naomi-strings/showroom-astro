@@ -3,7 +3,6 @@ import { Image } from "astro:assets";
 import { getFeaturedBrands, brandImage, brandLogo } from "../lib/brands";
 
 const { heading } = Astro.props;
-const { design } = Astro.params;
 const brands = await getFeaturedBrands();
 ---
 
@@ -13,17 +12,19 @@ const brands = await getFeaturedBrands();
     <ul class="featured-list">
       {
         brands.map((brand) => {
-          const { name, blurb, heroImage, logoWidth, logoStyle } = brand.data;
+          const { name, blurb, heroImage, tileImage, tilePosition, logoWidth, logoStyle } = brand.data;
+          const tile = tileImage ?? heroImage;
           const Logo = brandLogo(brand.id, logoStyle);
           return (
             <li class="feature-card">
               {/* the photo is the link; the former caption becomes the image's alt text */}
-              <a href={`/${design}/brands/${brand.id}/`} class="feature-media" aria-label={(blurb ? `${name}: ${blurb}` : name)}>
-                {heroImage && (
+              <a href={`/brands/${brand.id}/`} class="feature-media" aria-label={(blurb ? `${name}: ${blurb}` : name)}>
+                {tile && (
                   <Image
-                    src={brandImage(brand.id, heroImage)}
+                    src={brandImage(brand.id, tile)}
                     alt={(blurb ? `${name}: ${blurb}` : name)}
                     class="feature-bg"
+                    style={`--tile-pos: ${tilePosition}`}
                     widths={[400, 800, 1000]}
                     sizes="(min-width: 50em) 33vw, 100vw"
                   />

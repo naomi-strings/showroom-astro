@@ -1,24 +1,52 @@
 ---
-/* pre-index: lets the client choose which site design to look at */
-import "../styles/showroom-styles.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHero from "../components/SiteHero.astro";
+import FeaturedBrands from "../components/FeaturedBrands.astro";
+import OtherBrands from "../components/OtherBrands.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>showroom | choose a design</title>
-  </head>
-  <body class="pre-index">
-    <main class="wrapper">
-      <p class="pre-index-kicker">showroom boston · design review</p>
-      <ul class="pre-index-choices">
-        <li><a href="/1/" class="pre-index-choice"><span>1</span><small>header band</small></a></li>
-        <li><a href="/2/" class="pre-index-choice"><span>2</span><small>floating nav</small></a></li>
-      </ul>
-      <p class="pre-index-note">every page has a 1 | 2 switch in the top menu, so you can flip between designs anywhere.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title="showroom | contemporary furniture, boston"
+  description="boston's premier resource for contemporary furniture, featuring flexform, poliform, and poltrona frau."
+>
+  <SiteHero>
+    <!-- <span>boston<span class="apos">'</span>s premier resource </span>
+    <span>for contemporary furniture</span>-->
+  </SiteHero>
+
+  <!--TODO: Client asked for no tagline. Delete corresponding element from stylesheet. 
+-->
+
+  <section class="intro" id="intro">
+    <div class="wrapper">
+      <p>
+        showroom is boston<span class="apos">'</span>s premier resource for
+        contemporary furniture featuring an edited offering from some of the
+        world<span class="apos">'</span>s most respected european lines, such as <a
+          href="/brands/flexform/">flexform</a
+        >, <a href="/brands/poliform/">poliform</a>, and <a
+          href="/brands/poltrona-frau/">poltrona frau</a
+        >. featuring impeccable quality, reassuring comfort, and lasting style.
+        showroom specializes in unparalleled service from product selection to
+        installation with a thorough understanding of product lines from
+        construction and materials to fabric and finish. an in store designer is
+        able to develop and coordinate the perfect closet and kitchen solution,
+        and references to some of the city's best designers are also available.
+      </p>
+      <p class="hide-on-wide">
+        reach us by phone at <a href="tel:+16174824805">(617) 482-4805</a> or email
+        <a href="mailto:info@showroomboston.com">info@showroomboston.com</a>.
+      </p>
+      <address class="contact-info hide-on-mobile">
+        <a href="mailto:info@showroomboston.com">info@showroomboston.com</a><br
+        />
+        <a href="tel:+16174824805">(617) 482-4805</a><br />
+        240 stuart street<br />
+        boston ma 02116
+      </address>
+    </div>
+  </section>
+
+  <FeaturedBrands heading="@showroom" />
+  <OtherBrands scroll />
+</BaseLayout>

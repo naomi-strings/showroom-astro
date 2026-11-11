@@ -8,10 +8,12 @@ heroPosition: center
 logoWidth: 30%
 website: https://www.poliform.it
 gallery:
-  - src: lexington-closet.webp
-    alt: poliform lexington walk-in closet
+  - src: poliform-bristol-sofa.jpg
+    alt: poliform bristol sofa by jean-marie massaud
   - src: phoenix-kitchen.webp
     alt: poliform phoenix kitchen
+  - src: lexington-closet.webp
+    alt: poliform lexington walk-in closet
   - src: senzafine-closet.webp
     alt: poliform senzafine walk-in closet
   - src: senzafine-closet-2.webp

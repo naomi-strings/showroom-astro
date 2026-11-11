@@ -306,10 +306,6 @@ header > .wrapper {
   align-items: center;
 }
 
-.logo-full {
-  display: none;
-}
-
 /* the inline SVGs take currentColor, so the link must not be link-colored */
 .logo {
   color: inherit;
@@ -557,6 +553,7 @@ Home page: featured brands
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
+  object-position: var(--tile-pos, center); /* set per brand in index.md */
 }
 
 .feature-logo {
@@ -1064,14 +1061,17 @@ TODO - delete, client did not like.
   align-self: start;
   justify-self: start;
   margin: var(--spacer);
-  width: 40%;
+  width: var(--logo-w, 40%); /* per brand, from index.md logoWidth */
   height: auto;
   color: var(--clr-text-on-brand);
+  /* a whisper of shadow so white logos hold up on pale photos; follows the SVG's shape */
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.18));
 }
 
 /* native logos (flexform's red box) bleed to the left edge */
 .brand-hero-logo.logo-native {
   margin-left: 0;
+  filter: none; /* the box carries its own contrast */
 }
 
 .brand-text h1 {
@@ -1223,14 +1223,6 @@ TODO - delete, client did not like.
 /* This targets screens 800px wide and up */
 
 @media (min-width: 50em) {
-  .logo-full {
-    display: block;
-  }
-
-  .logo:has(.logo-full) .logo-s {
-    display: none;
-  }
-
   .hero {
     display: block;
     position: relative;
@@ -1438,7 +1430,7 @@ TODO - delete, client did not like.
     top: var(--spacer);
     left: var(--spacer);
     margin: 0;
-    width: 35%;
+    width: var(--logo-w, 35%);
     max-width: 480px;
   }
 
@@ -1509,98 +1501,18 @@ TODO - delete, client did not like.
 /* reference: box-shadow: h-offset v-offset blur-radius spread-radius color inset; */
 
 /*=============================
-Design switch (1 | 2) and pre-index
-===============================*/
-
-.design-switch {
-  margin-inline-start: 1.25em;
-  display: inline-flex;
-  gap: 0.35em;
-  font-size: var(--fs-300);
-  letter-spacing: var(--ls-50);
-  color: inherit;
-  text-decoration: none;
-  opacity: 0.55;
-  transition: opacity 0.15s;
-}
-
-.design-switch:hover,
-.design-switch:focus-visible {
-  opacity: 1;
-}
-
-.design-switch .on {
-  font-weight: var(--fw-700);
-  color: var(--clr-accent);
-}
-
-.pre-index {
-  min-height: 100svh;
-  display: grid;
-  place-items: center;
-  text-align: center;
-}
-
-.pre-index-kicker,
-.pre-index-note {
-  color: var(--clr-text-muted);
-  letter-spacing: var(--ls-50);
-}
-
-.pre-index-choices {
-  list-style: none;
-  padding: 0;
-  margin: var(--spacer) 0;
-  display: flex;
-  gap: var(--spacer);
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.pre-index-choice {
-  display: grid;
-  place-content: center;
-  gap: 0.25em;
-  width: 11rem;
-  aspect-ratio: 1;
-  background-color: var(--clr-header);
-  color: var(--clr-text-on-header);
-  text-decoration: none;
-  transition: background-color 0.15s;
-}
-
-.pre-index-choice span {
-  font-size: var(--fs-800);
-  font-weight: var(--fw-200);
-  line-height: 1;
-}
-
-.pre-index-choice small {
-  font-size: var(--fs-300);
-  letter-spacing: var(--ls-100);
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-.pre-index-choice:hover,
-.pre-index-choice:focus-visible {
-  background-color: var(--clr-accent);
-}
-
-/*=============================
-Design 2
-Everything here hangs off html[data-design="2"] so design 1 is untouched.
+Header + hero treatment (formerly "design 2")
 ===============================*/
 
 /* inner pages: the hero texture is the header background */
-html[data-design="2"] header {
+header {
   background-image: var(--header-texture);
   background-size: cover;
   background-position: center;
 }
 
 /* home: no header band; the nav floats at the right of the hero */
-html[data-design="2"][data-page="home"] header {
+html[data-page="home"] header {
   position: absolute;
   inset: 0 0 auto 0;
   z-index: 2;
@@ -1609,22 +1521,17 @@ html[data-design="2"][data-page="home"] header {
   overflow: visible;
 }
 
-html[data-design="2"][data-page="home"] .hero {
+html[data-page="home"] .hero {
   position: relative;
 }
 
 /* on the home page the header overlays the hero, so the hero takes the header's height back */
-html[data-design="2"][data-page="home"] .hero {
+html[data-page="home"] .hero {
   height: 100svh;
 }
 
-/* mobile: full wordmark instead of the S mark */
-html[data-design="2"] .logo-full {
+.logo-full {
   display: block;
-}
-
-html[data-design="2"] .logo-s {
-  display: none;
 }
 
 /* hamburger: three lines; open/hover = outer lines fade, middle turns red and stands up */
@@ -1677,16 +1584,17 @@ html[data-design="2"] .logo-s {
 }
 
 @media (max-width: 49.99em) {
-  html[data-design="2"] .menu-toggle {
+  .menu-toggle {
     display: block;
   }
 
   /* the nav drops down under the header when open */
-  html[data-design="2"] header nav {
+  header nav {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
+    z-index: 10; /* above the brand hero and anything else that follows the header */
     margin: 0;
     padding: var(--spacer);
     background-color: var(--clr-header);
@@ -1696,50 +1604,51 @@ html[data-design="2"] .logo-s {
     display: none;
   }
 
-  html[data-design="2"] header.menu-open nav {
+  header.menu-open nav {
     display: block;
   }
 
-  html[data-design="2"] header .nav-links {
+  header .nav-links {
     flex-direction: column;
     gap: 0;
   }
 
   /* each row is a full-width tap target; the current page is marked in the accent */
-  html[data-design="2"] header .nav-links a {
+  header .nav-links a {
     padding-block: 0.6em;
   }
 
-  html[data-design="2"] header .nav-links a[aria-current] {
+  header .nav-links a[aria-current] {
     color: var(--clr-accent);
   }
 
-  /* the open menu must be allowed to hang below the header */
-  html[data-design="2"] header {
+  /* the open menu must be allowed to hang below the header, and above what follows */
+  header {
     overflow: visible;
     position: relative;
+    z-index: 10;
   }
 
   /* no stem-and-square marker in the dropdown */
-  html[data-design="2"] .nav-links a[aria-current]::before,
-  html[data-design="2"] .nav-links a[aria-current]::after {
+  .nav-links a[aria-current]::before,
+  .nav-links a[aria-current]::after {
     display: none;
   }
 
   /* phone: no 1|2 switch and no theme toggle; the system preference decides */
-  html[data-design="2"] .design-switch,
-  html[data-design="2"] .theme-toggle {
+  .design-switch,
+  .theme-toggle {
     display: none;
   }
 
   /* phone home: the header *is* the hero. A flex row on the texture:
      wordmark at left (about 2/3 wide), hamburger at right, generous padding.
      The separate hero section isn't shown at all. */
-  html[data-design="2"][data-page="home"] .hero {
+  html[data-page="home"] .hero {
     display: none;
   }
 
-  html[data-design="2"][data-page="home"] header {
+  html[data-page="home"] header {
     position: relative;
     inset: auto;
     background-color: var(--clr-header);
@@ -1748,20 +1657,20 @@ html[data-design="2"] .logo-s {
     background-position: center;
   }
 
-  html[data-design="2"][data-page="home"] header > .wrapper {
+  html[data-page="home"] header > .wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding-block: calc(var(--spacer) * 1.5) calc(var(--spacer) * 2.5);
   }
 
-  html[data-design="2"][data-page="home"] .logo {
+  html[data-page="home"] .logo {
     visibility: visible;
     width: 66%;
     margin-block-start: calc(var(--spacer) * 1.5);
   }
 
-  html[data-design="2"][data-page="home"] .logo-full {
+  html[data-page="home"] .logo-full {
     width: 100%;
     height: auto;
   }
@@ -1769,16 +1678,16 @@ html[data-design="2"] .logo-s {
 
 @media (min-width: 50em) {
   /* desktop home: the header is exactly the hero's height, so the nav centers on the hero */
-  html[data-design="2"][data-page="home"] header {
+  html[data-page="home"] header {
     inset: 0 0 auto 0;
     height: 33vh;
   }
 
-  html[data-design="2"][data-page="home"] header > .wrapper {
+  html[data-page="home"] header > .wrapper {
     height: 100%;
   }
 
-  html[data-design="2"][data-page="home"] .hero {
+  html[data-page="home"] .hero {
     height: 33vh;
   }
 }
